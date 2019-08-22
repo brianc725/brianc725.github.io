@@ -3,15 +3,15 @@ import {
   Collapse,
   Navbar,
   NavbarToggler,
-  NavbarBrand,
   Nav,
   NavItem,
-  NavLink,
+  // NavLink,
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem
 } from 'reactstrap';
+import { NavLink, Link } from 'react-router-dom';
 
 class NavHeader extends Component {
   constructor(props) {
@@ -30,19 +30,17 @@ class NavHeader extends Component {
   render() {
     return (
       <Navbar color="light" light fixed="top" expand="md">
-        <NavbarBrand href="/">Brian Chan</NavbarBrand>
+        <Link to="/">Brian Chan</Link>
         <NavbarToggler onClick={this.toggle} />
         <Collapse isOpen={this.state.isOpen} navbar>
           <Nav className="ml-auto" navbar>
             <NavItem>
-              <NavLink href="/experience/">Experience</NavLink>
+              {/* <NavLink to="/experience/">Experience</NavLink> */}
+              <NavLink to="/experience/">Experience</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="/projects/">Projects</NavLink>
+              <NavLink to="/projects/">Projects</NavLink>
             </NavItem>
-            { this.state.loggedIn && <NavItem>
-              <NavLink href="/projects/">Projects</NavLink>
-            </NavItem>}
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>
                 Skills
@@ -54,7 +52,7 @@ class NavHeader extends Component {
                 <DropdownItem>
                   Frameworks
                   </DropdownItem>
-                  <DropdownItem>
+                <DropdownItem>
                   Software Tools
                   </DropdownItem>
                 <DropdownItem divider />
@@ -64,10 +62,10 @@ class NavHeader extends Component {
               </DropdownMenu>
             </UncontrolledDropdown>
             <NavItem>
-              <NavLink href="/resume/">Resume</NavLink>
+              <NavLink to="/resume/">Resume</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="/contacts/">Contact Me</NavLink>
+              <NavLink to="/contacts/">Contact Me</NavLink>
             </NavItem>
           </Nav>
         </Collapse>

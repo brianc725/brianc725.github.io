@@ -7,6 +7,7 @@ import {
   Input,
   FormFeedback,
 } from 'reactstrap';
+import { Redirect } from 'react-router-dom';
 import firebase from '../firebase';
 import { emailValidator } from '../scripts/validators';
 
@@ -21,7 +22,7 @@ class Admin extends Component {
     };
   }
 
-  onSubmit = () => {
+  onSubmit = (event) => {
     const { email, password } = this.state;
 
     // Validators
@@ -47,14 +48,13 @@ class Admin extends Component {
             invalidEmail: errorMessage,
           })
         }
-        console.log(errorCode);
-        console.log(errorMessage);
       });
     } else {
       this.setState({
         invalidEmail: 'This does not look like an email address. Please try again.',
       })
-    }    
+    } 
+    event.preventDefault();   
   }
 
   handleChange = (event) => {
@@ -66,6 +66,10 @@ class Admin extends Component {
   }
 
   render() {
+    if (this.props.loggedIn) {
+      return <Redirect to='/admin-edit/'/>
+    }
+
     return (
       <Form>
         <FormGroup>
