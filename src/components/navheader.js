@@ -5,13 +5,14 @@ import {
   NavbarToggler,
   Nav,
   NavItem,
-  // NavLink,
+  NavLink,
+  NavbarBrand,
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem
 } from 'reactstrap';
-import { NavLink, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 class NavHeader extends Component {
   constructor(props) {
@@ -30,16 +31,16 @@ class NavHeader extends Component {
   render() {
     return (
       <Navbar color="light" light fixed="top" expand="md">
-        <Link to="/">Brian Chan</Link>
+        <NavbarBrand tag={Link} to="/">Brian Chan</NavbarBrand>
         <NavbarToggler onClick={this.toggle} />
         <Collapse isOpen={this.state.isOpen} navbar>
           <Nav className="ml-auto" navbar>
             <NavItem>
               {/* <NavLink to="/experience/">Experience</NavLink> */}
-              <NavLink to="/experience/">Experience</NavLink>
+              <NavLink tag={Link} to="/experience/">Experience</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink to="/projects/">Projects</NavLink>
+              <NavLink tag={Link} to="/projects/">Projects</NavLink>
             </NavItem>
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>
@@ -62,11 +63,17 @@ class NavHeader extends Component {
               </DropdownMenu>
             </UncontrolledDropdown>
             <NavItem>
-              <NavLink to="/resume/">Resume</NavLink>
+              <NavLink tag={Link} to="/resume/">Resume</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink to="/contacts/">Contact Me</NavLink>
+              <NavLink tag={Link} to="/contacts/">Contact Me</NavLink>
             </NavItem>
+            {
+              this.props.loggedIn &&
+              <NavItem>
+                <NavLink tag={Link} to="/admin-edit/">Edit</NavLink>
+              </NavItem>
+            }
           </Nav>
         </Collapse>
       </Navbar>

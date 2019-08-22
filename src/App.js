@@ -11,7 +11,6 @@ import Contacts from './screens/contacts';
 import Admin from './screens/admin';
 import Edit from './screens/edit';
 import NavHeader from './components/navheader';
-import NavFooter from './components/navfooter';
 import firebase from './firebase';
 import './App.css';
 
@@ -42,7 +41,7 @@ class App extends Component {
     const { loggedIn } = this.state;
     return (
       <div>
-        <NavHeader/>
+        <NavHeader loggedIn={loggedIn}/>
         <div className="site_container">
             <Switch>
               <Route path="/" exact component={Home} />
@@ -62,7 +61,6 @@ class App extends Component {
               <Redirect to="/" />
             </Switch>
         </div>
-        <NavFooter loggedIn={loggedIn}/>
       </div>
     );
   }
