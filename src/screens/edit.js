@@ -17,7 +17,6 @@ class Edit extends Component {
   }
 
   render() {
-    console.log(this.props.location);
     return (
       <Form>
         <Button onClick={this.onSubmit}>Sign Out</Button>

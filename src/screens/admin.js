@@ -67,12 +67,6 @@ class Admin extends Component {
   }
 
   render() {
-    // TODO: don't pass this as props but instead call firebase auth
-    if (this.props.loggedIn) {
-      return <Redirect to='/admin-edit/'/>
-    }
-
-    console.log('history ', this.props.location);
     return (
       <Form>
         <FormGroup>
