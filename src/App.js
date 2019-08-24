@@ -11,55 +11,26 @@ import Contacts from './screens/contacts';
 import Admin from './screens/admin';
 import Edit from './screens/edit';
 import NavHeader from './components/navheader';
-import firebase from './firebase';
+import { PrivateRoute } from './components/privateroute';
 import './App.css';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      loggedIn: false,
-    };
-  }
-
-  componentDidMount() {
-    // Set up listener
-    firebase.auth().onAuthStateChanged((user) => {
-      user
-        ?
-        this.setState(() => ({
-          loggedIn: true,
-        }))
-        :
-        this.setState(() => ({
-          loggedIn: false,
-        }));
-    });
-  }
-
   render() {
-    const { loggedIn } = this.state;
     return (
       <div>
-        <NavHeader loggedIn={loggedIn}/>
+        <NavHeader />
         <div className="site_container">
-            <Switch>
-              <Route path="/" exact component={Home} />
-              <Route path="/experience/" component={Experience} />
-              <Route path="/projects/" component={Projects} />
-              <Route path="/contacts/" component={Contacts} />
-              {/* Admin portal */}
-              <Route path="/admin/" exact render={() => <Admin loggedIn={loggedIn}/>} />
-              {
-                loggedIn
-                  ?
-                  <Route path="/admin-edit/" exact component={Edit} />
-                  :
-                  <Route path="/" exact component={Home} />
-              }
-              {/* 404 redirect to Home */}
-              <Redirect to="/" />
-            </Switch>
+          <Switch>
+            <Route path="/" exact component={Home} />
+            <Route path="/experience/" component={Experience} />
+            <Route path="/projects/" component={Projects} />
+            <Route path="/contacts/" component={Contacts} />
+            {/* Admin portal */}
+            <Route path="/admin/" exact component={Admin} />
+            <PrivateRoute path='/admin-edit' component={Edit} />
+            {/* 404 redirect to Home */}
+            <Redirect to="/" />
+          </Switch>
         </div>
       </div>
     );

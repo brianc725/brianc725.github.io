@@ -13,6 +13,7 @@ import {
   DropdownItem
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import fb from '../firebase';
 
 class NavHeader extends Component {
   constructor(props) {
@@ -29,6 +30,7 @@ class NavHeader extends Component {
   }
 
   render() {
+    console.log('rerender');
     return (
       <Navbar color="light" light fixed="top" expand="md">
         <NavbarBrand tag={Link} to="/">Brian Chan</NavbarBrand>
@@ -69,7 +71,7 @@ class NavHeader extends Component {
               <NavLink tag={Link} to="/contacts/">Contact Me</NavLink>
             </NavItem>
             {
-              this.props.loggedIn &&
+              fb.isUserLoggedIn() &&
               <NavItem>
                 <NavLink tag={Link} to="/admin-edit/">Edit</NavLink>
               </NavItem>

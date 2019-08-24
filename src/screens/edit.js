@@ -3,12 +3,13 @@ import {
   Button,
   Form,
 } from 'reactstrap';
-import firebase from '../firebase';
+import fb from '../firebase';
 
 class Edit extends Component {
   onSubmit = (event) => {
-    firebase.auth().signOut().then(()=> {
+    fb.handleSignOut().then(()=> {
         console.log('Successfully logged out');
+        this.props.history.push('/');
     }).catch((error) => {
         console.error('Sign out error: ', error);
     });
@@ -16,6 +17,7 @@ class Edit extends Component {
   }
 
   render() {
+    console.log(this.props.location);
     return (
       <Form>
         <Button onClick={this.onSubmit}>Sign Out</Button>

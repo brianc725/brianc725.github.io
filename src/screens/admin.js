@@ -8,7 +8,7 @@ import {
   FormFeedback,
 } from 'reactstrap';
 import { Redirect } from 'react-router-dom';
-import firebase from '../firebase';
+import fb from '../firebase';
 import { emailValidator } from '../scripts/validators';
 
 class Admin extends Component {
@@ -22,14 +22,15 @@ class Admin extends Component {
     };
   }
 
-  onSubmit = (event) => {
+  onSubmit = async (event) => {
     const { email, password } = this.state;
 
     // Validators
     if (emailValidator(email.toLowerCase())) {
-      firebase.auth().signInWithEmailAndPassword(email, password)
+      fb.handleSignInWithEmailAndPassword(email, password)
       .then(() => {
         console.log('success');
+        this.props.history.push('/admin-edit');
       })
       .catch((error) => {
         // Handle Errors here.
@@ -66,10 +67,12 @@ class Admin extends Component {
   }
 
   render() {
+    // TODO: don't pass this as props but instead call firebase auth
     if (this.props.loggedIn) {
       return <Redirect to='/admin-edit/'/>
     }
 
+    console.log('history ', this.props.location);
     return (
       <Form>
         <FormGroup>
