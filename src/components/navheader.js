@@ -25,12 +25,28 @@ class NavHeader extends Component {
 
   toggle = () => {
     this.setState({
-      isOpen: !this.state.isOpen
+      isOpen: !this.state.isOpen,
+      user: undefined,
+    });
+  }
+
+  componentDidMount() {
+    fb.auth.onAuthStateChanged((user) => {
+      if (user) {
+        console.log('user is logged in');
+        this.setState({
+          user: user,
+        });
+      } else {
+        console.log('user is not logged in');
+        this.setState({
+          user: undefined,
+        })
+      }
     });
   }
 
   render() {
-    console.log('rerender');
     return (
       <Navbar color="light" light fixed="top" expand="md">
         <NavbarBrand tag={Link} to="/">Brian Chan</NavbarBrand>

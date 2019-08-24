@@ -12,9 +12,21 @@ import Admin from './screens/admin';
 import Edit from './screens/edit';
 import NavHeader from './components/navheader';
 import { PrivateRoute } from './components/privateroute';
+import fb from './firebase';
 import './App.css';
 
 class App extends Component {
+
+  componentDidMount() {
+    fb.auth.onAuthStateChanged((user) => {
+      if (user) {
+        console.log('user is logged in');
+      } else {
+        console.log('user is not logged in');
+      }
+    });
+  }
+
   render() {
     return (
       <div>
