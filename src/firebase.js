@@ -1,5 +1,6 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBqINJdrge1lm3bB3xGmfM_2VATpf3aFag",
@@ -15,9 +16,10 @@ class Firebase {
   constructor() {
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
-    
     // Load in the firebase functions we need
     this.auth = firebase.auth();
+    this.db = firebase.firestore();
+    this.experienceRef = this.db.collection('experiences');
   }
 
   handleSignInWithEmailAndPassword = (email, password) =>
@@ -26,8 +28,8 @@ class Firebase {
   handleSignOut = () => this.auth.signOut();
 
   getCurrentUser = () => this.auth.currentUser;
-  
-   isUserLoggedIn = () => !!this.auth.currentUser;
+
+  isUserLoggedIn = () => !!this.auth.currentUser;
 }
 
 const fb = new Firebase();

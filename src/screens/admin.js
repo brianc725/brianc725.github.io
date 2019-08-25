@@ -7,7 +7,6 @@ import {
   Input,
   FormFeedback,
 } from 'reactstrap';
-import { Redirect } from 'react-router-dom';
 import fb from '../firebase';
 import { emailValidator } from '../scripts/validators';
 
