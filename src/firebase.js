@@ -20,6 +20,8 @@ class Firebase {
     this.auth = firebase.auth();
     this.db = firebase.firestore();
     this.experienceRef = this.db.collection('experiences');
+    this.projectsRef = this.db.collection('projects');
+    this.socialsRef = this.db.collection('socials');
   }
 
   handleSignInWithEmailAndPassword = (email, password) =>

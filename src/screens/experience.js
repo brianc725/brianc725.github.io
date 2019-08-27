@@ -33,10 +33,31 @@ class Experience extends Component {
       });
   }
 
+
+  // HOW TO SORT BY PRIORITY FIELD
+  
+  // <script>
+  // var points = [{id: 1, data: {priority: 5}}, {id: 1, data: {priority: 50}}, {id: 1, data: {priority: 1}}, {id: 1, data: {priority: 8}}, {id: 1, data: {priority: 9}}];
+  // document.getElementById("demo").innerHTML = points;
+  
+  // function myFunction() {
+  //   points.sort(function(a, b){return a['data'].priority-b['data'].priority});
+  //   document.getElementById("demo").innerHTML = points[0]['data'].priority;
+  // }
+  // </script>
+  
+  // </body>
+  // </html>
+  
+
+
   render() {
     // If error, show error screen
     // If experience data is null show loading indicator
     // Othwerise, render the proper data
+
+    // when mapping items, if field is empty string, skip. 
+
     return (
       <h1>Experience Screen</h1>
     )
