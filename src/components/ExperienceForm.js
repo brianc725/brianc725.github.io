@@ -1,34 +1,83 @@
 import React, { Component } from 'react';
 import { Col, Row, Button, Form, FormGroup, Label, Input, } from 'reactstrap';
 import fb from '../firebase';
+import { nameNoSpace } from '../scripts/strings';
 
 class ExperienceForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
 
+  // Handles the states for when you want to update a field
+  handleChange = (event) => {
+    this.setState({
+      [event.target.id]: event.target.value
+    });
+  }
 
-  render() {
+  // Handles what happens when you actually press the update button
+  handleUpdate = async () => {
+    let newName = "";
     if (this.props.addition) {
-      return (
-        <h2> New addition form </h2>
-      );
+      newName = "addition"
+    } else {
+      newName = nameNoSpace(this.props.item.data['name']);
     }
 
-    const { item } = this.props;
-    // Use the name without spaces for unique key for form id's
-    const nameNoSpace = item.data['Name'].replace(/\s/g, '');
+    let firebaseUpdateObject = {};
+    // Iterate over all updated fields in this.state
+    for (let [key, value] of Object.entries(this.state)) {
+      // Remove the temporary id of nameNoSpace so it matches the firebase key
+      let fbKey = key.replace(newName, '');
+      firebaseUpdateObject[fbKey] = value;
+    }
+    let itemRef = fb.experienceRef.doc(this.props.item.id);
+    try {
+      await itemRef.update(firebaseUpdateObject);
+      console.log("Successfully updated");
+    }
+    catch (error) {
+      // The document probably doesn't exist.
+      console.error("Error updating document: ", error);
+    }
+  }
 
+  // Handles what happens when you delete an item
+  handleDelete = () => {
+    // https://firebase.google.com/docs/firestore/manage-data/delete-data
+  }
+
+  // Handles what happens when you want to add a new item
+  handleNewSubmission = () => {
+
+  }
+
+  render() {
+    let newName = "";
+    const { item } = this.props;
+
+    // If in adding mode, make newName just 'addition' temporarily
+    if (this.props.addition) {
+      newName = "addition"
+    } else {
+      newName = nameNoSpace(item.data['name']);
+    }
+
+    // Use the name without spaces for unique key for form id's
     return (
       <Form>
         <Row form>
           <Col md={6}>
             <FormGroup>
               <Label for="name">Name</Label>
-              <Input type="text" name="name" id={"name" + nameNoSpace} placeholder={item.data['Name']} />
+              <Input type="text" name="name" id={"name" + newName} placeholder={item ? item.data['name'] : ""} onChange={this.handleChange} />
             </FormGroup>
           </Col>
           <Col md={6}>
             <FormGroup>
               <Label for="location">Location</Label>
-              <Input type="text" name="location" id={"location" + nameNoSpace} placeholder={item.data['Location']} />
+              <Input type="text" name="location" id={"location" + newName} placeholder={item ? item.data['location'] : ""} onChange={this.handleChange} />
             </FormGroup>
           </Col>
         </Row>
@@ -36,13 +85,13 @@ class ExperienceForm extends Component {
           <Col md={6}>
             <FormGroup>
               <Label for="start_date">Start Date</Label>
-              <Input type="text" name="start_date" id={"start_date" + nameNoSpace} placeholder={item.data['Start Date']} />
+              <Input type="text" name="start_date" id={"start_date" + newName} placeholder={item ? item.data['start_date'] : ""} onChange={this.handleChange} />
             </FormGroup>
           </Col>
           <Col md={6}>
             <FormGroup>
               <Label for="end_date">End Date</Label>
-              <Input type="text" name="end_date" id={"end_date" + nameNoSpace} placeholder={item.data['End Date']} />
+              <Input type="text" name="end_date" id={"end_date" + newName} placeholder={item ? item.data['end_date'] : ""} onChange={this.handleChange} />
             </FormGroup>
           </Col>
         </Row>
@@ -50,28 +99,38 @@ class ExperienceForm extends Component {
           <Col md={6}>
             <FormGroup>
               <Label for="title">Title</Label>
-              <Input type="text" name="title" id={"title" + nameNoSpace} placeholder={item.data['Title']} />
+              <Input type="text" name="title" id={"title" + newName} placeholder={item ? item.data['title'] : ""} onChange={this.handleChange} />
             </FormGroup>
           </Col>
           <Col md={6}>
             <FormGroup>
               <Label for="order">Order</Label>
-              <Input type="number" name="order" id={"order" + nameNoSpace} placeholder={item.data['Order']} />
+              <Input type="number" name="order" id={"order" + newName} placeholder={item ? item.data['order'] : ""} onChange={this.handleChange} />
             </FormGroup>
           </Col>
         </Row>
         <FormGroup>
           <Label for="description">Description</Label>
-          <Input type="text" name="description" id={"description" + nameNoSpace} placeholder={item.data['Description']} />
+          <Input type="textarea" name="description" id={"description" + newName} placeholder={item ? item.data['description'] : ""} onChange={this.handleChange} />
         </FormGroup>
-        <Row>
-          <Col sm={6}>
-            <Button>Update</Button>
-          </Col>
-          <Col sm={6}>
-            <Button>Delete</Button>
-          </Col>
-        </Row>
+        {
+          this.props.addition
+            ?
+            <Row>
+              <Col sm={6}>
+                <Button onClick={this.handleNewSubmission}>Add</Button>
+              </Col>
+            </Row>
+            :
+            <Row>
+              <Col sm={6}>
+                <Button onClick={this.handleUpdate}>Update</Button>
+              </Col>
+              <Col sm={6}>
+                <Button onClick={this.handleDelete}>Delete</Button>
+              </Col>
+            </Row>
+        }
       </Form>
     );
   }
