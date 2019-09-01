@@ -60,8 +60,6 @@ class Edit extends Component {
   }
 
   render() {
-    console.log('exp data ', this.state.experienceData);
-
     let experienceDBForm =
       this.state.experienceData
         ?
@@ -73,86 +71,94 @@ class Edit extends Component {
 
     return (
       <div>
-        <Form>
-          <Button onClick={this.onSubmit}>Sign Out</Button>
-        </Form>
-        <div>
-          <Nav tabs>
-            <NavItem>
-              <NavLink
-                className={classnames({ active: this.state.activeTab === '1' })}
-                onClick={() => { this.toggle('1'); }}
-              >
-                Home
+        <Nav tabs>
+          <NavItem>
+            <NavLink
+              className={classnames({ active: this.state.activeTab === '1' })}
+              onClick={() => { this.toggle('1'); }}
+            >
+              Home
           </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink
-                className={classnames({ active: this.state.activeTab === '2' })}
-                onClick={() => { this.toggle('2'); }}
-              >
-                Experience
+          </NavItem>
+          <NavItem>
+            <NavLink
+              className={classnames({ active: this.state.activeTab === '2' })}
+              onClick={() => { this.toggle('2'); }}
+            >
+              Experience
           </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink
-                className={classnames({ active: this.state.activeTab === '3' })}
-                onClick={() => { this.toggle('3'); }}
-              >
-                Projects
+          </NavItem>
+          <NavItem>
+            <NavLink
+              className={classnames({ active: this.state.activeTab === '3' })}
+              onClick={() => { this.toggle('3'); }}
+            >
+              Projects
           </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink
-                className={classnames({ active: this.state.activeTab === '4' })}
-                onClick={() => { this.toggle('4'); }}
-              >
-                Skills
+          </NavItem>
+          <NavItem>
+            <NavLink
+              className={classnames({ active: this.state.activeTab === '4' })}
+              onClick={() => { this.toggle('4'); }}
+            >
+              Skills
           </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink
-                className={classnames({ active: this.state.activeTab === '5' })}
-                onClick={() => { this.toggle('5'); }}
-              >
-                Resume
+          </NavItem>
+          <NavItem>
+            <NavLink
+              className={classnames({ active: this.state.activeTab === '5' })}
+              onClick={() => { this.toggle('5'); }}
+            >
+              Resume
           </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink
-                className={classnames({ active: this.state.activeTab === '6' })}
-                onClick={() => { this.toggle('6'); }}
-              >
-                Socials
+          </NavItem>
+          <NavItem>
+            <NavLink
+              className={classnames({ active: this.state.activeTab === '6' })}
+              onClick={() => { this.toggle('6'); }}
+            >
+              Socials
           </NavLink>
-            </NavItem>
-          </Nav>
-          <TabContent activeTab={this.state.activeTab}>
-            <TabPane tabId="1">
-              <h1>Home Edit</h1>
-            </TabPane>
-            <TabPane tabId="2">
-              <div>
-                {/* The stuff from the DB that you can either update or delete */}
-                {experienceDBForm}
-                {/* New form if you want to add something new */}
-                <ExperienceForm addition={true}/>
-              </div>
-            </TabPane>
-            <TabPane tabId="3">
-              <h1>Projects edit</h1>
-            </TabPane>
-            <TabPane tabId="4">
-              <h1>Skills edit</h1>
-            </TabPane>
-            <TabPane tabId="5">
-              <h1>Resume edit</h1>
-            </TabPane>
-            <TabPane tabId="6">
-              <h1>Socials edit</h1>
-            </TabPane>
-          </TabContent>
-        </div>
+          </NavItem>
+          <NavItem>
+            <NavLink
+              className={classnames({ active: this.state.activeTab === '7' })}
+              onClick={() => { this.toggle('7'); }}
+            >
+              Sign Out
+          </NavLink>
+          </NavItem>
+        </Nav>
+        <TabContent activeTab={this.state.activeTab}>
+          <TabPane tabId="1">
+            <h1>Home Edit</h1>
+          </TabPane>
+          <TabPane tabId="2">
+            <div>
+              {/* The stuff from the DB that you can either update or delete */}
+              {experienceDBForm}
+              {/* New form if you want to add something new */}
+              <ExperienceForm addition={true} />
+            </div>
+          </TabPane>
+          <TabPane tabId="3">
+            <h1>Projects edit</h1>
+          </TabPane>
+          <TabPane tabId="4">
+            <h1>Skills edit</h1>
+          </TabPane>
+          <TabPane tabId="5">
+            <h1>Resume edit</h1>
+          </TabPane>
+          <TabPane tabId="6">
+            <h1>Socials edit</h1>
+          </TabPane>
+          <TabPane tabId="7">
+            <Form>
+              <Button onClick={this.onSubmit}>Sign Out</Button>
+            </Form>
+          </TabPane>
+        </TabContent>
       </div>
     )
   }

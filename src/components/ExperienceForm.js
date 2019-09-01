@@ -44,13 +44,43 @@ class ExperienceForm extends Component {
   }
 
   // Handles what happens when you delete an item
-  handleDelete = () => {
+  handleDelete = async () => {
     // https://firebase.google.com/docs/firestore/manage-data/delete-data
+    // Get the id of the item we want to delete
+    const { id } = this.props.item;
+
+    await fb.experienceRef.doc(id).delete()
+    .then(() => {
+      console.log("Successfully deleted ", id);
+    })
+    .catch((err) => {
+      console.error("Error deleting document: ", err);
+    })
   }
 
   // Handles what happens when you want to add a new item
-  handleNewSubmission = () => {
+  handleNewSubmission = async () => {
+    let newName = "";
+    if (this.props.addition) {
+      newName = "addition"
+    } else {
+      newName = nameNoSpace(this.props.item.data['name']);
+    }
 
+    let firebaseUpdateObject = {};
+    // Iterate over all updated fields in this.state
+    for (let [key, value] of Object.entries(this.state)) {
+      // Remove the temporary id of nameNoSpace so it matches the firebase key
+      let fbKey = key.replace(newName, '');
+      firebaseUpdateObject[fbKey] = value;
+    }
+    await fb.experienceRef.add(firebaseUpdateObject)
+    .then((docRef) => {
+      console.log("Document written with id ", docRef.id);
+    })
+    .catch((err) => {
+      console.error("Error adding new document: ", err);
+    })
   }
 
   render() {
