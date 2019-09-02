@@ -26,7 +26,7 @@ class NavHeader extends Component {
   toggle = () => {
     this.setState({
       isOpen: !this.state.isOpen,
-      user: undefined,
+      // user: undefined,
     });
   }
 
@@ -75,7 +75,7 @@ class NavHeader extends Component {
                   Software Tools
                   </DropdownItem>
                 <DropdownItem divider />
-                <DropdownItem>
+                <DropdownItem tag={Link} to="/skills/all/">
                   All
                   </DropdownItem>
               </DropdownMenu>

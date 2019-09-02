@@ -3,7 +3,7 @@ import { Col, Row, Button, Form, FormGroup, Label, Input, } from 'reactstrap';
 import fb from '../firebase';
 import { nameNoSpace } from '../scripts/strings';
 
-class ExperienceForm extends Component {
+class SocialsForm extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -32,7 +32,7 @@ class ExperienceForm extends Component {
       let fbKey = key.replace(newName, '');
       firebaseUpdateObject[fbKey] = value;
     }
-    let itemRef = fb.experienceRef.doc(this.props.item.id);
+    let itemRef = fb.socialsRef.doc(this.props.item.id);
     try {
       await itemRef.update(firebaseUpdateObject);
       console.log("Successfully updated");
@@ -48,7 +48,7 @@ class ExperienceForm extends Component {
     // Get the id of the item we want to delete
     const { id } = this.props.item;
 
-    await fb.experienceRef.doc(id).delete()
+    await fb.socialsRef.doc(id).delete()
     .then(() => {
       console.log("Successfully deleted ", id);
     })
@@ -73,7 +73,7 @@ class ExperienceForm extends Component {
       let fbKey = key.replace(newName, '');
       firebaseUpdateObject[fbKey] = value;
     }
-    await fb.experienceRef.add(firebaseUpdateObject)
+    await fb.socialsRef.add(firebaseUpdateObject)
     .then((docRef) => {
       console.log("Document written with id ", docRef.id);
     })
@@ -105,43 +105,17 @@ class ExperienceForm extends Component {
           </Col>
           <Col md={6}>
             <FormGroup>
-              <Label for="location">Location</Label>
-              <Input type="text" name="location" id={"location" + newName} placeholder={item ? item.data['location'] : ""} onChange={this.handleChange} />
+              <Label for="icon">Icon</Label>
+              <Input type="text" name="icon" id={"icon" + newName} placeholder={item ? item.data['icon'] : ""} onChange={this.handleChange} />
             </FormGroup>
           </Col>
         </Row>
         <Row form>
-          <Col md={6}>
             <FormGroup>
-              <Label for="start_date">Start Date</Label>
-              <Input type="text" name="start_date" id={"start_date" + newName} placeholder={item ? item.data['start_date'] : ""} onChange={this.handleChange} />
+              <Label for="link">Link</Label>
+              <Input type="text" name="link" id={"link" + newName} placeholder={item ? item.data['link'] : ""} onChange={this.handleChange} />
             </FormGroup>
-          </Col>
-          <Col md={6}>
-            <FormGroup>
-              <Label for="end_date">End Date</Label>
-              <Input type="text" name="end_date" id={"end_date" + newName} placeholder={item ? item.data['end_date'] : ""} onChange={this.handleChange} />
-            </FormGroup>
-          </Col>
         </Row>
-        <Row form>
-          <Col md={6}>
-            <FormGroup>
-              <Label for="title">Title</Label>
-              <Input type="text" name="title" id={"title" + newName} placeholder={item ? item.data['title'] : ""} onChange={this.handleChange} />
-            </FormGroup>
-          </Col>
-          <Col md={6}>
-            <FormGroup>
-              <Label for="order">Order</Label>
-              <Input type="number" name="order" id={"order" + newName} placeholder={item ? item.data['order'] : ""} onChange={this.handleChange} />
-            </FormGroup>
-          </Col>
-        </Row>
-        <FormGroup>
-          <Label for="description">Description</Label>
-          <Input type="textarea" name="description" id={"description" + newName} placeholder={item ? item.data['description'] : ""} onChange={this.handleChange} />
-        </FormGroup>
         {
           this.props.addition
             ?
@@ -165,4 +139,4 @@ class ExperienceForm extends Component {
   }
 }
 
-export default ExperienceForm;
+export default SocialsForm;

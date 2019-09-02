@@ -10,6 +10,7 @@ import {
 } from 'reactstrap';
 import classnames from 'classnames';
 import ExperienceForm from '../components/ExperienceForm';
+import SocialsForm from '../components/SocialsForm';
 import fb from '../firebase';
 
 class Edit extends Component {
@@ -18,6 +19,7 @@ class Edit extends Component {
     this.state = {
       activeTab: '1',
       experienceData: undefined,
+      socialsData: undefined,
     };
   }
 
@@ -39,6 +41,25 @@ class Edit extends Component {
         // save error to a state
         console.error('Error getting documents', err);
       });
+
+      fb.socialsRef.get()
+      .then(snapshot => {
+        let items = [];
+        snapshot.forEach(doc => {
+          let item = {
+            id: doc.id,
+            data: doc.data(),
+          }
+          items.push(item);
+        });
+        this.setState({
+          socialsData: items,
+        })
+      }).catch(err => {
+        // save error to a state
+        console.error('Error getting documents', err);
+      });
+
   }
 
   toggle = (tab) => {
@@ -68,6 +89,15 @@ class Edit extends Component {
         )
         :
         <h2>Loading Experience Data...</h2>
+
+    let socialsDBForm =
+      this.state.socialsData
+      ?
+      this.state.socialsData.map((item) =>
+        <SocialsForm key={item.id} item={item} />
+      )
+      :
+      <h2>Loading Socials Data...</h2>
 
     return (
       <div>
@@ -151,7 +181,12 @@ class Edit extends Component {
             <h1>Resume edit</h1>
           </TabPane>
           <TabPane tabId="6">
-            <h1>Socials edit</h1>
+          <div>
+              {/* The stuff from the DB that you can either update or delete */}
+              {socialsDBForm}
+              {/* New form if you want to add something new */}
+              <SocialsForm addition={true} />
+            </div>
           </TabPane>
           <TabPane tabId="7">
             <Form>
