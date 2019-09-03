@@ -27,6 +27,7 @@ class ExperienceForm extends Component {
 
     let firebaseUpdateObject = {};
     // Iterate over all updated fields in this.state
+    // eslint-disable-next-line
     for (let [key, value] of Object.entries(this.state)) {
       // Remove the temporary id of nameNoSpace so it matches the firebase key
       let fbKey = key.replace(newName, '');
@@ -68,6 +69,7 @@ class ExperienceForm extends Component {
 
     let firebaseUpdateObject = {};
     // Iterate over all updated fields in this.state
+    // eslint-disable-next-line
     for (let [key, value] of Object.entries(this.state)) {
       // Remove the temporary id of nameNoSpace so it matches the firebase key
       let fbKey = key.replace(newName, '');

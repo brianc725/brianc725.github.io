@@ -1,0 +1,18 @@
+.icon-img {
+    max-height: 50px;
+    width: auto;
+    border: none;
+}
+
+.icon-name {
+    margin-top: 8px;
+    color: black;
+}
+
+.icon-name:hover {
+    color:rgba(0,0,0,.5);
+}
+
+.media-all, .media-all:hover {
+    text-decoration: none;
+}
