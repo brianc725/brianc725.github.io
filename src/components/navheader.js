@@ -30,6 +30,17 @@ class NavHeader extends Component {
     });
   }
 
+  // Handles the large view navbar
+  // If navbar is large, isOpen is false, so we do not want to toggle
+  // However, if it's in mobile then isOpen is true and we do want to toggle
+  toggleCond = () => {
+    if (this.state.isOpen) {
+      this.setState({
+        isOpen: false,
+      });
+    }
+  }
+
   componentDidMount() {
     fb.auth.onAuthStateChanged((user) => {
       if (user) {
@@ -55,10 +66,10 @@ class NavHeader extends Component {
           <Nav className="ml-auto" navbar>
             <NavItem>
               {/* <NavLink to="/experience/">Experience</NavLink> */}
-              <NavLink tag={Link} to="/experience/">Experience</NavLink>
+              <NavLink tag={Link} to="/experience/" onClick={this.toggleCond}>Experience</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink tag={Link} to="/projects/">Projects</NavLink>
+              <NavLink tag={Link} to="/projects/" onClick={this.toggleCond}>Projects</NavLink>
             </NavItem>
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>
@@ -75,21 +86,21 @@ class NavHeader extends Component {
                   Software Tools
                   </DropdownItem>
                 <DropdownItem divider />
-                <DropdownItem tag={Link} to="/skills/all/">
+                <DropdownItem tag={Link} to="/skills/all/" onClick={this.toggleCond}>
                   All
                   </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
             <NavItem>
-              <NavLink tag={Link} to="/resume/">Resume</NavLink>
+              <NavLink tag={Link} to="/resume/" onClick={this.toggleCond}>Resume</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink tag={Link} to="/contacts/">Contact Me</NavLink>
+              <NavLink tag={Link} to="/contacts/" onClick={this.toggleCond}>Contact Me</NavLink>
             </NavItem>
             {
               fb.isUserLoggedIn() &&
               <NavItem>
-                <NavLink tag={Link} to="/admin-edit/">Edit</NavLink>
+                <NavLink tag={Link} to="/admin-edit/" onClick={this.toggleCond}>Edit</NavLink>
               </NavItem>
             }
           </Nav>
