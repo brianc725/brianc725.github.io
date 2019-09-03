@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { ListGroup, ListGroupItem, Media } from 'reactstrap';
+import { ListGroup, ListGroupItem, Media, Spinner } from 'reactstrap';
 import fb from '../firebase';
 import '../styles/contactsStyles.css';
+import '../App.css';
 
 class Contacts extends Component {
   constructor(props) {
@@ -37,7 +38,9 @@ class Contacts extends Component {
   render() {
     if (this.state.socialsData === undefined) {
       return (
-        <h1>Loading...</h1>
+        <div>
+          <Spinner color="primary" className="spinner-center"/>
+        </div>
       )
     }
 

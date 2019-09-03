@@ -7,11 +7,13 @@ import {
   NavItem,
   NavLink,
   Button,
+  Spinner
 } from 'reactstrap';
 import classnames from 'classnames';
 import ExperienceForm from '../components/ExperienceForm';
 import SocialsForm from '../components/SocialsForm';
 import fb from '../firebase';
+import '../App.css'
 
 class Edit extends Component {
   constructor(props) {
@@ -42,7 +44,7 @@ class Edit extends Component {
         console.error('Error getting documents', err);
       });
 
-      fb.socialsRef.get()
+    fb.socialsRef.get()
       .then(snapshot => {
         let items = [];
         snapshot.forEach(doc => {
@@ -88,16 +90,20 @@ class Edit extends Component {
           <ExperienceForm key={item.id} item={item} />
         )
         :
-        <h2>Loading Experience Data...</h2>
+        <div>
+          <Spinner color="primary" className="spinner-center" />
+        </div>
 
     let socialsDBForm =
       this.state.socialsData
-      ?
-      this.state.socialsData.map((item) =>
-        <SocialsForm key={item.id} item={item} />
-      )
-      :
-      <h2>Loading Socials Data...</h2>
+        ?
+        this.state.socialsData.map((item) =>
+          <SocialsForm key={item.id} item={item} />
+        )
+        :
+        <div>
+          <Spinner color="primary" className="spinner-center" />
+        </div>
 
     return (
       <div>
@@ -181,7 +187,7 @@ class Edit extends Component {
             <h1>Resume edit</h1>
           </TabPane>
           <TabPane tabId="6">
-          <div>
+            <div>
               {/* The stuff from the DB that you can either update or delete */}
               {socialsDBForm}
               {/* New form if you want to add something new */}

@@ -1,3 +1,9 @@
 .site_container {
     padding-top: 60px;
 }
+
+.spinner-center {
+    position:fixed;
+    left: 50%;
+    top: 50%;
+}
