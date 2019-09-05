@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { ListGroup, ListGroupItem, Media, Spinner } from 'reactstrap';
 import fb from '../firebase';
+import { sortAlpha } from '../scripts/strings';
 import '../styles/contactsStyles.css';
 import '../App.css';
 
@@ -23,8 +24,9 @@ class Contacts extends Component {
           }
           items.push(item);
         });
+        let sorted = sortAlpha(items);
         this.setState({
-          socialsData: items,
+          socialsData: sorted,
         });
       }).catch(err => {
         // save error to a state
