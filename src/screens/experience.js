@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { ListGroup, ListGroupItem, Media, Spinner } from 'reactstrap';
+import { sortPriority } from '../scripts/strings';
 import fb from '../firebase';
 
 class Experience extends Component {
@@ -21,8 +23,10 @@ class Experience extends Component {
           }
           items.push(item);
         });
+        let sorted = sortPriority(items);
+        console.log(sorted);
         this.setState({
-          experienceData: items,
+          experienceData: sorted,
         })
       }).catch(err => {
         // save error to a state
@@ -33,34 +37,34 @@ class Experience extends Component {
       });
   }
 
-
-  // HOW TO SORT BY PRIORITY FIELD
-  
-  // <script>
-  // var points = [{id: 1, data: {priority: 5}}, {id: 1, data: {priority: 50}}, {id: 1, data: {priority: 1}}, {id: 1, data: {priority: 8}}, {id: 1, data: {priority: 9}}];
-  // document.getElementById("demo").innerHTML = points;
-  
-  // function myFunction() {
-  //   points.sort(function(a, b){return a['data'].priority-b['data'].priority});
-  //   document.getElementById("demo").innerHTML = points[0]['data'].priority;
-  // }
-  // </script>
-  
-  // </body>
-  // </html>
-  
-
-
   render() {
     // If error, show error screen
     // If experience data is null show loading indicator
     // Othwerise, render the proper data
 
     // when mapping items, if field is empty string, skip. 
+    if (this.state.experienceData === undefined) {
+      return (
+        <div>
+          <Spinner color="primary" className="spinner-center" />
+        </div>
+      )
+    }
+
+    let experienceItems = this.state.experienceData.map((item) => {
+      const { data } = item;
+      return (
+        <ListGroupItem key={item.id}>
+          <h2>{data.name}</h2>
+        </ListGroupItem>
+      );
+    });
 
     return (
-      <h1>Experience Screen</h1>
-    )
+      <ListGroup>
+        {experienceItems}
+      </ListGroup>
+    );
   }
 }
 
