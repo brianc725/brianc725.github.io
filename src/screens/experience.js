@@ -1,5 +1,16 @@
 import React, { Component } from 'react';
-import { ListGroup, ListGroupItem, Media, Spinner } from 'reactstrap';
+import {
+  ListGroup,
+  ListGroupItem,
+  Spinner,
+  Alert,
+  Card,
+  CardText,
+  CardBody,
+  CardTitle,
+  CardSubtitle,
+  CardHeader,
+} from 'reactstrap';
 import { sortPriority } from '../scripts/strings';
 import fb from '../firebase';
 
@@ -24,10 +35,9 @@ class Experience extends Component {
           items.push(item);
         });
         let sorted = sortPriority(items);
-        console.log(sorted);
         this.setState({
           experienceData: sorted,
-        })
+        });
       }).catch(err => {
         // save error to a state
         console.error('Error getting documents', err);
@@ -38,12 +48,15 @@ class Experience extends Component {
   }
 
   render() {
-    // If error, show error screen
-    // If experience data is null show loading indicator
-    // Othwerise, render the proper data
-
-    // when mapping items, if field is empty string, skip. 
     if (this.state.experienceData === undefined) {
+      if (this.state.error) {
+        return (
+          <Alert color="danger">
+            Failed to load data. Please try again later.
+          </Alert>
+        )
+      }
+
       return (
         <div>
           <Spinner color="primary" className="spinner-center" />
@@ -55,7 +68,16 @@ class Experience extends Component {
       const { data } = item;
       return (
         <ListGroupItem key={item.id}>
-          <h2>{data.name}</h2>
+          {/* If a field is empty skip over it and show empty string or null */}
+          <Card>
+            <CardBody className="text-center">
+              <CardHeader tag="h3">{data.name}</CardHeader>
+              <CardTitle tag="h5">{data.title}</CardTitle>
+              <CardSubtitle><em>{data.start_date} - {data.end_date}</em></CardSubtitle>
+              <CardSubtitle><small><em>{data.location}</em></small></CardSubtitle>
+              <CardText>{data.description}</CardText>
+            </CardBody>
+          </Card>
         </ListGroupItem>
       );
     });

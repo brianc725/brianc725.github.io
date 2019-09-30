@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ListGroup, ListGroupItem, Media, Spinner } from 'reactstrap';
+import { ListGroup, ListGroupItem, Media, Spinner, Alert } from 'reactstrap';
 import fb from '../firebase';
 import { sortAlpha } from '../scripts/strings';
 import '../styles/contactsStyles.css';
@@ -10,6 +10,7 @@ class Contacts extends Component {
     super(props);
     this.state = {
       socialsData: undefined,
+      error: undefined,
     }
   }
 
@@ -39,6 +40,14 @@ class Contacts extends Component {
 
   render() {
     if (this.state.socialsData === undefined) {
+      if (this.state.error) {
+        return (
+          <Alert color="danger">
+            Failed to load data. Please try again later.
+          </Alert>
+        )
+      }
+
       return (
         <div>
           <Spinner color="primary" className="spinner-center"/>
