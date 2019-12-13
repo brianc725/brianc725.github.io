@@ -4,7 +4,7 @@
     margin-right: 12.5%;
 }
 
-@media (max-width: 767px) { /*when screen gets small update margins*/
+@media (max-width: 767px) { /*when screen gets medium update margins*/
     .site_container {
         padding-top: 60px;
         margin-left: 5%;
@@ -12,7 +12,7 @@
     }
 }
 
-@media (max-width: 479px) { /*when screen gets x-small update margins*/
+@media (max-width: 479px) { /*when screen gets small update margins*/
     .site_container {
         padding-top: 60px;
         margin-left: 2.5%;

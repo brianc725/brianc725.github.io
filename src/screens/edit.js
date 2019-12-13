@@ -12,6 +12,7 @@ import {
 import classnames from 'classnames';
 import ExperienceForm from '../components/ExperienceForm';
 import SocialsForm from '../components/SocialsForm';
+import ResumeForm from '../components/ResumeForm';
 import fb from '../firebase';
 import '../App.css'
 
@@ -104,6 +105,16 @@ class Edit extends Component {
         <div>
           <Spinner color="primary" className="spinner-center" />
         </div>
+    let resumeForm =
+      this.state.resumeData
+        ?
+        this.state.resumeData.map((item) =>
+          <ResumeForm key={item.id} item={item} />
+        )
+        :
+        <div>
+          <Spinner color="primary" className="spinner-center" />
+        </div>
 
     return (
       <div>
@@ -184,7 +195,12 @@ class Edit extends Component {
             <h1>Skills edit</h1>
           </TabPane>
           <TabPane tabId="5">
-            <h1>Resume edit</h1>
+          <div>
+              {/* The stuff from the DB that you can either update or delete */}
+              {/* {resumeForm} */}
+              {/* New form if you want to add something new */}
+              <ResumeForm addition={true} />
+            </div>
           </TabPane>
           <TabPane tabId="6">
             <div>
