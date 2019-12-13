@@ -1,49 +1,55 @@
 import React, { Component } from 'react';
-import { Col, Row, Button, Form, FormGroup, Label, Input, Alert } from 'reactstrap';
+import { Button, Alert } from 'reactstrap';
 import fb from '../firebase';
-import { nameNoSpace } from '../scripts/strings';
 
 class ResumeForm extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            noFile: true,
+            success: false,
+        };
     }
 
-    handleSubmit = () => {
+    checkFile = () => {
         // check to see if there even is a file selected
         if (document.getElementById('file').files.length === 0) {
-            alert('Please select PDF file before upload attempt');
-            return;
+            this.setState({ noFile: true, });
         }
 
+        this.setState({ noFile: false, success: false, });
+    }
+
+    handleSubmit = async () => {
+        if (this.state.noFile) {
+            return;
+        }
         // select the one and only selected file
         const file = document.getElementById('file').files[0];
-        console.log(file);
+        const resumeRef = fb.storageRef.child('resume.pdf');
+        await resumeRef.put(file).then(function (snapshot) {
+            console.log('Uploaded file successfully');
+        });
+        this.setState({
+            success: true,
+        });
     }
 
     render() {
-        let newName = "";
-        const { item } = this.props;
-
-        // If in adding mode, make newName just 'addition' temporarily
-        if (this.props.addition) {
-            newName = "addition"
-        } else {
-            newName = nameNoSpace(item.data['name']);
-        }
-
         // Use the name without spaces for unique key for form id's
         return (
             <div className='upload-resume'>
-            <h3>Current file name: </h3>
+                {this.state.success && <Alert color="success">File upload successful.</Alert>}
+                {this.state.noFile && <Alert color="danger">No file currently selected for upload.</Alert>}
                 <input type='file'
                     id='file'
                     className='input-file'
                     accept='.pdf'
+                    onChange={this.checkFile}
                 />
-            <Button onClick={this.handleUpdate}>Update</Button>
+                <Button onClick={this.handleSubmit}>Update</Button>
             </div>
-    );
+        );
     }
 }
 
