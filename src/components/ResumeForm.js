@@ -26,7 +26,7 @@ class ResumeForm extends Component {
         }
         // select the one and only selected file
         const file = document.getElementById('file').files[0];
-        const resumeRef = fb.storageRef.child('resume.pdf');
+        const resumeRef = fb.storageRef.child('BrianChanResume.pdf');
         await resumeRef.put(file).then(function (snapshot) {
             console.log('Uploaded file successfully');
         });

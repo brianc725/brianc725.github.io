@@ -8,6 +8,7 @@ import Home from './screens/home';
 import Experience from './screens/experience';
 import Projects from './screens/projects';
 import Contacts from './screens/contacts';
+import Resume from './screens/resume';
 import Admin from './screens/admin';
 import Edit from './screens/edit';
 import NavHeader from './components/navheader';
@@ -37,6 +38,7 @@ class App extends Component {
             <Route path="/experience/" component={Experience} />
             <Route path="/projects/" component={Projects} />
             <Route path="/contacts/" component={Contacts} />
+            <Route path="/resume/" component={Resume} />
             {/* Admin portal */}
             <Route path="/admin/" exact component={Admin} />
             <PrivateRoute path='/admin-edit' component={Edit} />

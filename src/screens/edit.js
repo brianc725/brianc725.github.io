@@ -105,16 +105,6 @@ class Edit extends Component {
         <div>
           <Spinner color="primary" className="spinner-center" />
         </div>
-    let resumeForm =
-      this.state.resumeData
-        ?
-        this.state.resumeData.map((item) =>
-          <ResumeForm key={item.id} item={item} />
-        )
-        :
-        <div>
-          <Spinner color="primary" className="spinner-center" />
-        </div>
 
     return (
       <div>
@@ -196,10 +186,7 @@ class Edit extends Component {
           </TabPane>
           <TabPane tabId="5">
           <div>
-              {/* The stuff from the DB that you can either update or delete */}
-              {/* {resumeForm} */}
-              {/* New form if you want to add something new */}
-              <ResumeForm addition={true} />
+              <ResumeForm />
             </div>
           </TabPane>
           <TabPane tabId="6">

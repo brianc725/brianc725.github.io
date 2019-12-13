@@ -72,7 +72,7 @@ class Experience extends Component {
           <Card>
             <CardBody className="text-center">
               <CardHeader tag="h3">{data.name}</CardHeader>
-              <CardTitle tag="h5">{data.title}</CardTitle>
+              <CardTitle tag="h5" style={{paddingTop: '8px'}}>{data.title}</CardTitle>
               <CardSubtitle><em>{data.start_date} - {data.end_date}</em></CardSubtitle>
               <CardSubtitle><small><em>{data.location}</em></small></CardSubtitle>
               <CardText>{data.description}</CardText>
