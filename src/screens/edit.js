@@ -13,6 +13,7 @@ import classnames from 'classnames';
 import ExperienceForm from '../components/ExperienceForm';
 import SocialsForm from '../components/SocialsForm';
 import ResumeForm from '../components/ResumeForm';
+import CoursesForm from '../components/CoursesForm';
 import fb from '../firebase';
 import '../App.css'
 
@@ -23,6 +24,7 @@ class Edit extends Component {
       activeTab: '1',
       experienceData: undefined,
       socialsData: undefined,
+      coursesData: undefined,
     };
   }
 
@@ -63,6 +65,23 @@ class Edit extends Component {
         console.error('Error getting documents', err);
       });
 
+    fb.coursesRef.get()
+      .then(snapshot => {
+        let items = [];
+        snapshot.forEach(doc => {
+          let item = {
+            id: doc.id,
+            data: doc.data(),
+          }
+          items.push(item);
+        });
+        this.setState({
+          coursesData: items,
+        })
+      }).catch(err => {
+        // save error to a state
+        console.error('Error getting documents', err);
+      });
   }
 
   toggle = (tab) => {
@@ -106,6 +125,17 @@ class Edit extends Component {
           <Spinner color="primary" className="spinner-center" />
         </div>
 
+    let coursesDBForm =
+      this.state.coursesData
+        ?
+        this.state.coursesData.map((item) =>
+          <CoursesForm key={item.id} item={item} />
+        )
+        :
+        <div>
+          <Spinner color="primary" className="spinner-center" />
+        </div>
+
     return (
       <div>
         <Nav tabs>
@@ -138,7 +168,7 @@ class Edit extends Component {
               className={classnames({ active: this.state.activeTab === '4' })}
               onClick={() => { this.toggle('4'); }}
             >
-              Skills
+              Coursework
           </NavLink>
           </NavItem>
           <NavItem>
@@ -146,7 +176,7 @@ class Edit extends Component {
               className={classnames({ active: this.state.activeTab === '5' })}
               onClick={() => { this.toggle('5'); }}
             >
-              Resume
+              Extracurriculars
           </NavLink>
           </NavItem>
           <NavItem>
@@ -154,13 +184,29 @@ class Edit extends Component {
               className={classnames({ active: this.state.activeTab === '6' })}
               onClick={() => { this.toggle('6'); }}
             >
-              Socials
+              Skills
           </NavLink>
           </NavItem>
           <NavItem>
             <NavLink
               className={classnames({ active: this.state.activeTab === '7' })}
               onClick={() => { this.toggle('7'); }}
+            >
+              Resume
+          </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink
+              className={classnames({ active: this.state.activeTab === '8' })}
+              onClick={() => { this.toggle('8'); }}
+            >
+              Socials
+          </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink
+              className={classnames({ active: this.state.activeTab === '9' })}
+              onClick={() => { this.toggle('9'); }}
             >
               Sign Out
           </NavLink>
@@ -182,14 +228,25 @@ class Edit extends Component {
             <h1>Projects edit</h1>
           </TabPane>
           <TabPane tabId="4">
-            <h1>Skills edit</h1>
+            <div>
+              {/* The stuff from the DB that you can either update or delete */}
+              {coursesDBForm}
+              {/* New form if you want to add something new */}
+              <CoursesForm addition={true} />
+            </div>
           </TabPane>
           <TabPane tabId="5">
-          <div>
+            <h1>Extracurriculars edit</h1>
+          </TabPane>
+          <TabPane tabId="6">
+            <h1>Skills edit</h1>
+          </TabPane>
+          <TabPane tabId="7">
+            <div>
               <ResumeForm />
             </div>
           </TabPane>
-          <TabPane tabId="6">
+          <TabPane tabId="8">
             <div>
               {/* The stuff from the DB that you can either update or delete */}
               {socialsDBForm}
@@ -197,7 +254,7 @@ class Edit extends Component {
               <SocialsForm addition={true} />
             </div>
           </TabPane>
-          <TabPane tabId="7">
+          <TabPane tabId="9">
             <Form>
               <Button onClick={this.onSubmit}>Sign Out</Button>
             </Form>

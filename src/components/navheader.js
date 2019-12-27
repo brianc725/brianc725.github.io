@@ -73,24 +73,20 @@ class NavHeader extends Component {
             </NavItem>
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>
-                Skills
+                Education
                 </DropdownToggle>
               <DropdownMenu right>
                 <DropdownItem>
-                  Languages
-                  </DropdownItem>
+                  <NavLink tag={Link} to="/courses/" onClick={this.toggleCond}>Relevant Coursework</NavLink>
+                </DropdownItem>
                 <DropdownItem>
-                  Frameworks
-                  </DropdownItem>
-                <DropdownItem>
-                  Software Tools
-                  </DropdownItem>
-                <DropdownItem divider />
-                <DropdownItem tag={Link} to="/skills/all/" onClick={this.toggleCond}>
-                  All
-                  </DropdownItem>
+                  <NavLink tag={Link} to="/clubs/" onClick={this.toggleCond}>Extracurriculars</NavLink>
+                </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
+            <NavItem>
+              <NavLink tag={Link} to="/skills/" onClick={this.toggleCond}>Skills</NavLink>
+            </NavItem>
             <NavItem>
               <NavLink tag={Link} to="/resume/" onClick={this.toggleCond}>Resume</NavLink>
             </NavItem>

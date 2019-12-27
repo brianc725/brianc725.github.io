@@ -11,6 +11,6 @@ export const sortAlpha = (items) => {
 // sorts from highest number to lowest
 export const sortPriority = (items) => {
     return items.sort((a,b) => {
-        return b['data'].order-a['data'].order;
+        return Number(b['data'].order)-Number(a['data'].order);
     });
 }

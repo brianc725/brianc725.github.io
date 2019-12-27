@@ -8,6 +8,7 @@ import Home from './screens/home';
 import Experience from './screens/experience';
 import Projects from './screens/projects';
 import Contacts from './screens/contacts';
+import Courses from './screens/courses';
 import Resume from './screens/resume';
 import Admin from './screens/admin';
 import Edit from './screens/edit';
@@ -37,6 +38,7 @@ class App extends Component {
             <Route path="/" exact component={Home} />
             <Route path="/experience/" component={Experience} />
             <Route path="/projects/" component={Projects} />
+            <Route path="/courses/" component={Courses} />
             <Route path="/contacts/" component={Contacts} />
             <Route path="/resume/" component={Resume} />
             {/* Admin portal */}
