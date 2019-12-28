@@ -208,6 +208,14 @@ class Edit extends Component {
               className={classnames({ active: this.state.activeTab === '9' })}
               onClick={() => { this.toggle('9'); }}
             >
+              Awards
+          </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink
+              className={classnames({ active: this.state.activeTab === '10' })}
+              onClick={() => { this.toggle('10'); }}
+            >
               Sign Out
           </NavLink>
           </NavItem>
@@ -255,6 +263,9 @@ class Edit extends Component {
             </div>
           </TabPane>
           <TabPane tabId="9">
+          <h1>Awards edit</h1>
+          </TabPane>
+          <TabPane tabId="10">
             <Form>
               <Button onClick={this.onSubmit}>Sign Out</Button>
             </Form>
