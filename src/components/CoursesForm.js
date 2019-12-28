@@ -115,12 +115,6 @@ class CoursesForm extends Component {
         <Row form>
           <Col md={6}>
             <FormGroup>
-              <Label for="order">Order</Label>
-              <Input type="number" name="order" id={"order" + newName} placeholder={item ? item.data['order'] : ""} onChange={this.handleChange} />
-            </FormGroup>
-          </Col>
-          <Col md={6}>
-            <FormGroup>
               <Label for="current">Current</Label>
               <Input type="number" name="current" id={"current" + newName} placeholder={item ? item.data['current'] : ""} onChange={this.handleChange} />
             </FormGroup>

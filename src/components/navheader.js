@@ -82,6 +82,9 @@ class NavHeader extends Component {
                 <DropdownItem>
                   <NavLink tag={Link} to="/clubs/" onClick={this.toggleCond}>Extracurriculars</NavLink>
                 </DropdownItem>
+                <DropdownItem>
+                  <NavLink tag={Link} to="/awards/" onClick={this.toggleCond}>Awards</NavLink>
+                </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
             <NavItem>
