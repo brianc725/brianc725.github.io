@@ -33,6 +33,7 @@ class Admin extends Component {
       })
       .catch((error) => {
         // Handle Errors here.
+        console.log('error', error);
         var errorCode = error.code;
         var errorMessage = error.message;
         if (errorCode === 'auth/wrong-password') {

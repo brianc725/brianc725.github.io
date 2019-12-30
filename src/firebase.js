@@ -4,7 +4,7 @@ import 'firebase/firestore';
 import 'firebase/storage';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBqINJdrge1lm3bB3xGmfM_2VATpf3aFag",
+  apiKey: process.env.REACT_APP_FB_API_KEY,
   authDomain: "personalwebsite2019-d87ab.firebaseapp.com",
   databaseURL: "https://personalwebsite2019-d87ab.firebaseio.com",
   projectId: "personalwebsite2019-d87ab",
