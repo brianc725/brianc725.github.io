@@ -36,9 +36,10 @@ class App extends Component {
         <div className="site_container">
           <Switch>
             <Route path="/" exact component={Home} />
-            <Route path="/experience/" component={Experience} />
+            <Route path="/experience/" component={() => <Experience fbRef={fb.experienceRef} />} />
             <Route path="/projects/" component={Projects} />
             <Route path="/courses/" component={Courses} />
+            <Route path="/clubs/" component={() => <Experience fbRef={fb.clubsRef} />} />
             <Route path="/contacts/" component={Contacts} />
             <Route path="/resume/" component={Resume} />
             {/* Admin portal */}

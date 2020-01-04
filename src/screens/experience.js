@@ -24,7 +24,7 @@ class Experience extends Component {
   }
 
   componentDidMount() {
-    fb.experienceRef.get()
+    this.props.fbRef.get()
       .then(snapshot => {
         let items = [];
         snapshot.forEach(doc => {
@@ -68,14 +68,13 @@ class Experience extends Component {
       const { data } = item;
       return (
         <ListGroupItem key={item.id}>
-          {/* If a field is empty skip over it and show empty string or null */}
           <Card>
             <CardBody className="text-center">
-              <CardHeader tag="h3">{data.name}</CardHeader>
-              <CardTitle tag="h5" style={{paddingTop: '8px'}}>{data.title}</CardTitle>
-              <CardSubtitle><em>{data.start_date} - {data.end_date}</em></CardSubtitle>
-              <CardSubtitle><small><em>{data.location}</em></small></CardSubtitle>
-              <CardText>{data.description}</CardText>
+              {data.name && <CardHeader tag="h3">{data.name}</CardHeader>}
+              {data.title && <CardTitle tag="h5" style={{ paddingTop: '8px' }}>{data.title}</CardTitle>}
+              {data.start_date && data.end_date && <CardSubtitle><em>{data.start_date} - {data.end_date}</em></CardSubtitle>}
+              {data.location && <CardSubtitle><small><em>{data.location}</em></small></CardSubtitle>}
+              {data.description && <CardText>{data.description}</CardText>}
             </CardBody>
           </Card>
         </ListGroupItem>
