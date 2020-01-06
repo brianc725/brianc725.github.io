@@ -5,6 +5,7 @@ import {
   Nav,
   NavItem,
   NavLink,
+  Spinner,
 } from 'reactstrap';
 import classnames from 'classnames';
 import fb from '../firebase';
@@ -69,7 +70,9 @@ class Courses extends Component {
 
   render() {
     if (!this.state.currentCoursesData && !this.state.completedCoursesData) {
-      return <h1>Loading...</h1>
+      return (<div>
+        <Spinner color="primary" className="spinner-center" />
+      </div>)
     }
 
     return (
