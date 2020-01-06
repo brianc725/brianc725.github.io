@@ -25,6 +25,7 @@ class Edit extends Component {
       experienceData: undefined,
       socialsData: undefined,
       coursesData: undefined,
+      clubsData: undefined,
     };
   }
 
@@ -82,6 +83,24 @@ class Edit extends Component {
         // save error to a state
         console.error('Error getting documents', err);
       });
+
+    fb.clubsRef.get()
+      .then(snapshot => {
+        let items = [];
+        snapshot.forEach(doc => {
+          let item = {
+            id: doc.id,
+            data: doc.data(),
+          }
+          items.push(item);
+        });
+        this.setState({
+          clubsData: items,
+        })
+      }).catch(err => {
+        // save error to a state
+        console.error('Error getting documents', err);
+      });
   }
 
   toggle = (tab) => {
@@ -107,7 +126,7 @@ class Edit extends Component {
       this.state.experienceData
         ?
         this.state.experienceData.map((item) =>
-          <ExperienceForm key={item.id} item={item} />
+          <ExperienceForm key={item.id} item={item} fbRef={fb.experienceRef} />
         )
         :
         <div>
@@ -130,6 +149,17 @@ class Edit extends Component {
         ?
         this.state.coursesData.map((item) =>
           <CoursesForm key={item.id} item={item} />
+        )
+        :
+        <div>
+          <Spinner color="primary" className="spinner-center" />
+        </div>
+
+    let clubsDBForm =
+      this.state.clubsData
+        ?
+        this.state.clubsData.map((item) =>
+          <ExperienceForm key={item.id} item={item} fbRef={fb.clubsRef} />
         )
         :
         <div>
@@ -229,7 +259,7 @@ class Edit extends Component {
               {/* The stuff from the DB that you can either update or delete */}
               {experienceDBForm}
               {/* New form if you want to add something new */}
-              <ExperienceForm addition={true} />
+              <ExperienceForm addition={true} fbRef={fb.experienceRef} />
             </div>
           </TabPane>
           <TabPane tabId="3">
@@ -244,7 +274,8 @@ class Edit extends Component {
             </div>
           </TabPane>
           <TabPane tabId="5">
-            <h1>Extracurriculars edit</h1>
+            {clubsDBForm}
+            <ExperienceForm addition={true} fbRef={fb.clubsRef} />
           </TabPane>
           <TabPane tabId="6">
             <h1>Skills edit</h1>
@@ -263,7 +294,7 @@ class Edit extends Component {
             </div>
           </TabPane>
           <TabPane tabId="9">
-          <h1>Awards edit</h1>
+            <h1>Awards edit</h1>
           </TabPane>
           <TabPane tabId="10">
             <Form>

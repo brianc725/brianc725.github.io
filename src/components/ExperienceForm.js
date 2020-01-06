@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Col, Row, Button, Form, FormGroup, Label, Input, } from 'reactstrap';
-import fb from '../firebase';
 import { nameNoSpace } from '../scripts/strings';
 
 class ExperienceForm extends Component {
@@ -33,7 +32,7 @@ class ExperienceForm extends Component {
       let fbKey = key.replace(newName, '');
       firebaseUpdateObject[fbKey] = value;
     }
-    let itemRef = fb.experienceRef.doc(this.props.item.id);
+    let itemRef = this.props.fbRef.doc(this.props.item.id);
     try {
       await itemRef.update(firebaseUpdateObject);
       console.log("Successfully updated");
@@ -49,7 +48,7 @@ class ExperienceForm extends Component {
     // Get the id of the item we want to delete
     const { id } = this.props.item;
 
-    await fb.experienceRef.doc(id).delete()
+    await this.props.fbRef.doc(id).delete()
     .then(() => {
       console.log("Successfully deleted ", id);
     })
@@ -75,7 +74,7 @@ class ExperienceForm extends Component {
       let fbKey = key.replace(newName, '');
       firebaseUpdateObject[fbKey] = value;
     }
-    await fb.experienceRef.add(firebaseUpdateObject)
+    await this.props.fbRef.add(firebaseUpdateObject)
     .then((docRef) => {
       console.log("Document written with id ", docRef.id);
     })

@@ -12,7 +12,6 @@ import {
   CardHeader,
 } from 'reactstrap';
 import { sortPriority } from '../scripts/strings';
-import fb from '../firebase';
 
 class Experience extends Component {
   constructor(props) {
@@ -56,7 +55,6 @@ class Experience extends Component {
           </Alert>
         )
       }
-
       return (
         <div>
           <Spinner color="primary" className="spinner-center" />
