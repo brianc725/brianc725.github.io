@@ -14,8 +14,10 @@ import ExperienceForm from '../components/ExperienceForm';
 import SocialsForm from '../components/SocialsForm';
 import ResumeForm from '../components/ResumeForm';
 import CoursesForm from '../components/CoursesForm';
+import AwardsForm from '../components/AwardsForm';
 import fb from '../firebase';
 import '../App.css'
+import Awards from './awards';
 
 class Edit extends Component {
   constructor(props) {
@@ -26,6 +28,7 @@ class Edit extends Component {
       socialsData: undefined,
       coursesData: undefined,
       clubsData: undefined,
+      awardsData: undefined,
     };
   }
 
@@ -101,6 +104,24 @@ class Edit extends Component {
         // save error to a state
         console.error('Error getting documents', err);
       });
+
+    fb.awardsRef.get()
+      .then(snapshot => {
+        let items = [];
+        snapshot.forEach(doc => {
+          let item = {
+            id: doc.id,
+            data: doc.data(),
+          }
+          items.push(item);
+        });
+        this.setState({
+          awardsData: items,
+        })
+      }).catch(err => {
+        // save error to a state
+        console.error('Error getting documents', err);
+      });
   }
 
   toggle = (tab) => {
@@ -165,6 +186,16 @@ class Edit extends Component {
         <div>
           <Spinner color="primary" className="spinner-center" />
         </div>
+
+    let awardsDBForm = this.state.awardsData
+      ?
+      this.state.awardsData.map((item) =>
+        <AwardsForm key={item.id} item={item} />
+      )
+      :
+      <div>
+        <Spinner color="primary" className="spinner-center" />
+      </div>
 
     return (
       <div>
@@ -294,7 +325,8 @@ class Edit extends Component {
             </div>
           </TabPane>
           <TabPane tabId="9">
-            <h1>Awards edit</h1>
+            {awardsDBForm}
+            <AwardsForm addition={true} />
           </TabPane>
           <TabPane tabId="10">
             <Form>
