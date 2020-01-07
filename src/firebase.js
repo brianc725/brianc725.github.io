@@ -25,6 +25,7 @@ class Firebase {
     this.socialsRef = this.db.collection('socials');
     this.coursesRef = this.db.collection('courses');
     this.clubsRef = this.db.collection('clubs');
+    this.awardsRef = this.db.collection('awards');
     this.storageRef = firebase.storage().ref();
   }
 
