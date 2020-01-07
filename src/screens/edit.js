@@ -17,7 +17,6 @@ import CoursesForm from '../components/CoursesForm';
 import AwardsForm from '../components/AwardsForm';
 import fb from '../firebase';
 import '../App.css'
-import Awards from './awards';
 
 class Edit extends Component {
   constructor(props) {
