@@ -26,6 +26,8 @@ class App extends Component {
     this.state = {
       awardsData: undefined,
       socialsData: undefined,
+      currentCoursesData: undefined,
+      completedCoursesData: undefined,
       isLoading: true,
     }
   }
@@ -39,6 +41,9 @@ class App extends Component {
 
     let awardsData = [];
     let socialsData = [];
+    let currentCoursesData = [];
+    let completedCoursesData = [];
+
     await fb.awardsRef.get()
       .then(snapshot => {
         let items = [];
@@ -58,26 +63,53 @@ class App extends Component {
       });
 
     await fb.socialsRef.get()
-    .then(snapshot => {
-      let items = [];
-      snapshot.forEach(doc => {
-        let item = {
-          id: doc.id,
-          data: doc.data(),
-        }
-        items.push(item);
+      .then(snapshot => {
+        let items = [];
+        snapshot.forEach(doc => {
+          let item = {
+            id: doc.id,
+            data: doc.data(),
+          }
+          items.push(item);
+        });
+        let sorted = sortAlpha(items);
+        socialsData = sorted;
+      }).catch(err => {
+        // save error to a state
+        console.error('Error getting documents', err);
+        socialsData = undefined;
       });
-      let sorted = sortAlpha(items);
-      socialsData = sorted;
-    }).catch(err => {
-      // save error to a state
-      console.error('Error getting documents', err);
-      socialsData = undefined;
-    });
+
+    await fb.coursesRef.get()
+      .then(snapshot => {
+        let items = [];
+        snapshot.forEach(doc => {
+          let item = {
+            id: doc.id,
+            data: doc.data(),
+          }
+          items.push(item);
+        });
+        let sorted = sortAlpha(items);
+        sorted.forEach(item => {
+          if (item.data['current'] === '0') {
+            completedCoursesData.push(item);
+          } else {
+            currentCoursesData.push(item);
+          }
+        })
+      }).catch(err => {
+        // save error to a state
+        console.error('Error getting documents', err);
+        currentCoursesData = undefined;
+        completedCoursesData = undefined;
+      });
 
     this.setState({
       awardsData,
       socialsData,
+      currentCoursesData,
+      completedCoursesData,
       isLoading: false,
     });
   }
@@ -98,10 +130,25 @@ class App extends Component {
                 <Route path="/" exact component={Home} />
                 <Route path="/experience/" component={() => <Experience fbRef={fb.experienceRef} />} />
                 <Route path="/projects/" component={Projects} />
-                <Route path="/courses/" component={Courses} />
+                <Route
+                  path="/courses/"
+                  render={() =>
+                    <Courses
+                      currentCoursesData={this.state.currentCoursesData}
+                      completedCoursesData={this.state.completedCoursesData} />}
+                />
                 <Route path="/clubs/" component={() => <Experience fbRef={fb.clubsRef} />} />
-                <Route path="/awards/" render={() => <Awards awardsData={this.state.awardsData} />} />
-                <Route path="/contacts/" render={() => <Contacts socialsData={this.state.socialsData}/>} />
+                <Route
+                  path="/awards/"
+                  render={() =>
+                    <Awards
+                      awardsData={this.state.awardsData} />}
+                />
+                <Route
+                  path="/contacts/"
+                  render={() =>
+                    <Contacts socialsData={this.state.socialsData} />}
+                />
                 <Route path="/resume/" component={Resume} />
                 {/* Admin portal */}
                 <Route path="/admin/" exact component={Admin} />

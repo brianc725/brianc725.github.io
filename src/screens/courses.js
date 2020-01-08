@@ -5,11 +5,9 @@ import {
   Nav,
   NavItem,
   NavLink,
-  Spinner,
+  Alert,
 } from 'reactstrap';
 import classnames from 'classnames';
-import fb from '../firebase';
-import { sortAlpha } from '../scripts/strings';
 
 const Course = (props) => {
   const { data } = props;
@@ -21,43 +19,7 @@ class Courses extends Component {
     super(props);
     this.state = {
       activeTab: '1',
-      currentCoursesData: undefined,
-      completedCoursesData: undefined,
     };
-  }
-
-  componentDidMount() {
-    fb.coursesRef.get()
-      .then(snapshot => {
-        let items = [];
-        snapshot.forEach(doc => {
-          let item = {
-            id: doc.id,
-            data: doc.data(),
-          }
-          items.push(item);
-        });
-        let sorted = sortAlpha(items);
-        const currentCoursesData = [];
-        const completedCoursesData = [];
-        sorted.forEach(item => {
-          if (item.data['current'] === '0') {
-            completedCoursesData.push(item);
-          } else {
-            currentCoursesData.push(item);
-          }
-        })
-        this.setState({
-          currentCoursesData,
-          completedCoursesData,
-        });
-      }).catch(err => {
-        // save error to a state
-        console.error('Error getting documents', err);
-        this.setState({
-          error: err,
-        })
-      });
   }
 
   toggle = (tab) => {
@@ -69,10 +31,12 @@ class Courses extends Component {
   }
 
   render() {
-    if (!this.state.currentCoursesData && !this.state.completedCoursesData) {
-      return (<div>
-        <Spinner color="primary" className="spinner-center" />
-      </div>)
+    if (!this.props.currentCoursesData && !this.props.completedCoursesData) {
+      return (
+        <Alert color="danger">
+          Failed to load data. Please try again later.
+        </Alert>
+      )
     }
 
     return (
@@ -98,18 +62,18 @@ class Courses extends Component {
         <TabContent activeTab={this.state.activeTab}>
           <TabPane tabId="1">
             {
-              this.state.completedCoursesData.length !== 0
+              this.props.completedCoursesData.length !== 0
                 ?
-                this.state.completedCoursesData.map(item => <Course key={item.id} data={item.data} />)
+                this.props.completedCoursesData.map(item => <Course key={item.id} data={item.data} />)
                 :
                 'Something went wrong...'
             }
           </TabPane>
           <TabPane tabId="2">
             {
-              this.state.currentCoursesData.length !== 0
+              this.props.currentCoursesData.length !== 0
                 ?
-                this.state.currentCoursesData.map(item => <Course key={item.id} data={item.data} />)
+                this.props.currentCoursesData.map(item => <Course key={item.id} data={item.data} />)
                 :
                 'There are no relevant classes that I am currently taking.'
             }
