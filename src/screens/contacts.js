@@ -1,61 +1,19 @@
 import React, { Component } from 'react';
-import { ListGroup, ListGroupItem, Media, Spinner, Alert } from 'reactstrap';
-import fb from '../firebase';
-import { sortAlpha } from '../scripts/strings';
+import { ListGroup, ListGroupItem, Media, Alert } from 'reactstrap';
 import '../styles/contactsStyles.css';
 import '../App.css';
 
 class Contacts extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      socialsData: undefined,
-      error: undefined,
-    }
-  }
-
-  componentDidMount() {
-    fb.socialsRef.get()
-      .then(snapshot => {
-        let items = [];
-        snapshot.forEach(doc => {
-          let item = {
-            id: doc.id,
-            data: doc.data(),
-          }
-          items.push(item);
-        });
-        let sorted = sortAlpha(items);
-        this.setState({
-          socialsData: sorted,
-        });
-      }).catch(err => {
-        // save error to a state
-        console.error('Error getting documents', err);
-        this.setState({
-          error: err,
-        })
-      });
-  }
-
   render() {
-    if (this.state.socialsData === undefined) {
-      if (this.state.error) {
+    if (this.props.socialsData === undefined) {
         return (
           <Alert color="danger">
             Failed to load data. Please try again later.
           </Alert>
         )
-      }
-
-      return (
-        <div>
-          <Spinner color="primary" className="spinner-center"/>
-        </div>
-      )
     }
 
-    let socialItems = this.state.socialsData.map((item) => {
+    let socialItems = this.props.socialsData.map((item) => {
       const { data } = item;
       return (
         <ListGroupItem key={item.id}>
