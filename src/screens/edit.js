@@ -67,24 +67,6 @@ class Edit extends Component {
         console.error('Error getting documents', err);
       });
 
-    fb.coursesRef.get()
-      .then(snapshot => {
-        let items = [];
-        snapshot.forEach(doc => {
-          let item = {
-            id: doc.id,
-            data: doc.data(),
-          }
-          items.push(item);
-        });
-        this.setState({
-          coursesData: items,
-        })
-      }).catch(err => {
-        // save error to a state
-        console.error('Error getting documents', err);
-      });
-
     fb.clubsRef.get()
       .then(snapshot => {
         let items = [];
