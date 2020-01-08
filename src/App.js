@@ -43,6 +43,8 @@ class App extends Component {
     let socialsData = [];
     let currentCoursesData = [];
     let completedCoursesData = [];
+    let experienceData = [];
+    let clubData = [];
 
     await fb.awardsRef.get()
       .then(snapshot => {
@@ -105,11 +107,49 @@ class App extends Component {
         completedCoursesData = undefined;
       });
 
+    await fb.experienceRef.get()
+      .then(snapshot => {
+        let items = [];
+        snapshot.forEach(doc => {
+          let item = {
+            id: doc.id,
+            data: doc.data(),
+          }
+          items.push(item);
+        });
+        let sorted = sortAlpha(items);
+        experienceData = sorted;
+      }).catch(err => {
+        // save error to a state
+        console.error('Error getting documents', err);
+        experienceData = undefined;
+      });
+
+    await fb.clubsRef.get()
+      .then(snapshot => {
+        let items = [];
+        snapshot.forEach(doc => {
+          let item = {
+            id: doc.id,
+            data: doc.data(),
+          }
+          items.push(item);
+        });
+        let sorted = sortAlpha(items);
+        clubData = sorted;
+      }).catch(err => {
+        // save error to a state
+        console.error('Error getting documents', err);
+        clubData = undefined;
+      });
+
     this.setState({
       awardsData,
       socialsData,
       currentCoursesData,
       completedCoursesData,
+      experienceData,
+      clubData,
       isLoading: false,
     });
   }
@@ -128,7 +168,11 @@ class App extends Component {
             <div className="site_container">
               <Switch>
                 <Route path="/" exact component={Home} />
-                <Route path="/experience/" component={() => <Experience fbRef={fb.experienceRef} />} />
+                <Route
+                  path="/experience/"
+                  render={() =>
+                    <Experience allData={this.state.experienceData} />}
+                />
                 <Route path="/projects/" component={Projects} />
                 <Route
                   path="/courses/"
@@ -137,7 +181,11 @@ class App extends Component {
                       currentCoursesData={this.state.currentCoursesData}
                       completedCoursesData={this.state.completedCoursesData} />}
                 />
-                <Route path="/clubs/" component={() => <Experience fbRef={fb.clubsRef} />} />
+                <Route
+                  path="/clubs/"
+                  render={() =>
+                    <Experience allData={this.state.clubData} />}
+                />
                 <Route
                   path="/awards/"
                   render={() =>

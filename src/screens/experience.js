@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {
   ListGroup,
   ListGroupItem,
-  Spinner,
   Alert,
   Card,
   CardText,
@@ -11,58 +10,19 @@ import {
   CardSubtitle,
   CardHeader,
 } from 'reactstrap';
-import { sortPriority } from '../scripts/strings';
 
 class Experience extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      experienceData: undefined,
-      error: undefined,
-    }
-  }
-
-  componentDidMount() {
-    this.props.fbRef.get()
-      .then(snapshot => {
-        let items = [];
-        snapshot.forEach(doc => {
-          let item = {
-            id: doc.id,
-            data: doc.data(),
-          }
-          items.push(item);
-        });
-        let sorted = sortPriority(items);
-        this.setState({
-          experienceData: sorted,
-        });
-      }).catch(err => {
-        // save error to a state
-        console.error('Error getting documents', err);
-        this.setState({
-          error: err,
-        })
-      });
-  }
 
   render() {
-    if (this.state.experienceData === undefined) {
-      if (this.state.error) {
-        return (
-          <Alert color="danger">
-            Failed to load data. Please try again later.
-          </Alert>
-        )
-      }
+    if (this.props.allData === undefined) {
       return (
-        <div>
-          <Spinner color="primary" className="spinner-center" />
-        </div>
+        <Alert color="danger">
+          Failed to load data. Please try again later.
+          </Alert>
       )
     }
 
-    let experienceItems = this.state.experienceData.map((item) => {
+    let experienceItems = this.props.allData.map((item) => {
       const { data } = item;
       return (
         <ListGroupItem key={item.id}>
