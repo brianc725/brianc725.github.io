@@ -44,12 +44,12 @@ class NavHeader extends Component {
   componentDidMount() {
     fb.auth.onAuthStateChanged((user) => {
       if (user) {
-        console.log('user is logged in');
+        // console.log('user is logged in');
         this.setState({
           user: user,
         });
       } else {
-        console.log('user is not logged in');
+        // console.log('user is not logged in');
         this.setState({
           user: undefined,
         })

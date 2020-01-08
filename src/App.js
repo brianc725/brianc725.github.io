@@ -30,12 +30,10 @@ class App extends Component {
     }
   }
 
-  componentDidMount = async () => {
+  async componentDidMount() {
     fb.auth.onAuthStateChanged((user) => {
       if (user) {
-        console.log('user is logged in');
-      } else {
-        console.log('user is not logged in');
+        // console.log('user is logged in');
       }
     });
 

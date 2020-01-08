@@ -18,7 +18,7 @@ class Awards extends Component {
     const trimmed = arr.map(i => i.trim());
     let items = trimmed.map(item => {
       return (
-        <ListGroupItem>{item}</ListGroupItem>
+        <ListGroupItem key={item}>{item}</ListGroupItem>
       );
     });
     return (
