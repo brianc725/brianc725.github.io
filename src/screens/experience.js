@@ -12,6 +12,15 @@ import {
 } from 'reactstrap';
 
 class Experience extends Component {
+  componentDidMount() {
+    if (!this.props.allData) {
+      return;
+    }
+
+    if (this.props.allData.length === 0) {
+      this.props.getData();
+    }
+  }
 
   render() {
     if (this.props.allData === undefined) {

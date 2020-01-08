@@ -11,6 +11,19 @@ import {
 import '../App.css';
 
 class Awards extends Component {
+  componentDidMount() {
+    // Do nothing if there was an error
+    if (!this.props.awardsData) {
+      return;
+    }
+
+    // No data yet so call API to update state above
+    if (this.props.awardsData.length === 0) {
+      // No data yet so load first and then put spinner
+      this.props.getData();
+    }
+  }
+
   // Given the data.awarded string in format "F 18, F 19", return list comp.
   // separating them
   separateAwarded = (awarded) => {
@@ -27,8 +40,8 @@ class Awards extends Component {
   }
 
   render() {
-    // If undefined at this point, then there was error previously
-    if (this.props.awardsData === undefined) {
+    if (!this.props.awardsData) {
+      // If undefined at this point, then there was error previously
       return (
         <Alert color="danger">
           Failed to load data. Please try again later.

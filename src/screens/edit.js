@@ -13,7 +13,6 @@ import classnames from 'classnames';
 import ExperienceForm from '../components/ExperienceForm';
 import SocialsForm from '../components/SocialsForm';
 import ResumeForm from '../components/ResumeForm';
-import CoursesForm from '../components/CoursesForm';
 import AwardsForm from '../components/AwardsForm';
 import fb from '../firebase';
 import '../App.css'
@@ -164,17 +163,6 @@ class Edit extends Component {
           <Spinner color="primary" className="spinner-center" />
         </div>
 
-    let coursesDBForm =
-      this.state.coursesData
-        ?
-        this.state.coursesData.map((item) =>
-          <CoursesForm key={item.id} item={item} />
-        )
-        :
-        <div>
-          <Spinner color="primary" className="spinner-center" />
-        </div>
-
     let clubsDBForm =
       this.state.clubsData
         ?
@@ -221,14 +209,6 @@ class Edit extends Component {
               onClick={() => { this.toggle('3'); }}
             >
               Projects
-          </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink
-              className={classnames({ active: this.state.activeTab === '4' })}
-              onClick={() => { this.toggle('4'); }}
-            >
-              Coursework
           </NavLink>
           </NavItem>
           <NavItem>
@@ -294,14 +274,6 @@ class Edit extends Component {
           </TabPane>
           <TabPane tabId="3">
             <h1>Projects edit</h1>
-          </TabPane>
-          <TabPane tabId="4">
-            <div>
-              {/* The stuff from the DB that you can either update or delete */}
-              {coursesDBForm}
-              {/* New form if you want to add something new */}
-              <CoursesForm addition={true} />
-            </div>
           </TabPane>
           <TabPane tabId="5">
             {clubsDBForm}

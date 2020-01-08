@@ -22,6 +22,16 @@ class Courses extends Component {
     };
   }
 
+  componentDidMount() {
+    if (!this.props.currentCoursesData && !this.props.completedCoursesData) {
+      return;
+    }
+
+    if (this.props.currentCoursesData.length === 0 && this.props.completedCoursesData.length === 0) {
+      this.props.getData();
+    }
+  }
+
   toggle = (tab) => {
     if (this.state.activeTab !== tab) {
       this.setState({

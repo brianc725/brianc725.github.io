@@ -4,7 +4,6 @@ import {
   Redirect,
   Switch,
 } from "react-router-dom";
-import { Spinner } from 'reactstrap';
 import Home from './screens/home';
 import Experience from './screens/experience';
 import Projects from './screens/projects';
@@ -17,6 +16,7 @@ import Edit from './screens/edit';
 import NavHeader from './components/navheader';
 import { PrivateRoute } from './components/privateroute';
 import fb from './firebase';
+import courseData from './courseData';
 import { sortPriority, sortAlpha } from './scripts/strings';
 import './App.css';
 
@@ -24,11 +24,12 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      awardsData: undefined,
-      socialsData: undefined,
-      currentCoursesData: undefined,
-      completedCoursesData: undefined,
-      isLoading: true,
+      awardsData: [],
+      socialsData: [],
+      currentCoursesData: [],
+      completedCoursesData: [],
+      clubsData: [],
+      experienceData: [],
     }
   }
 
@@ -38,15 +39,33 @@ class App extends Component {
         // console.log('user is logged in');
       }
     });
+  }
 
-    let awardsData = [];
-    let socialsData = [];
+  // No longer using firebase due to amount of reads... Plus this data is
+  // not going to change anymore after graduation.
+  getCoursesData = async () => {
     let currentCoursesData = [];
     let completedCoursesData = [];
-    let experienceData = [];
-    let clubData = [];
 
-    await fb.awardsRef.get()
+    let sorted = sortAlpha(courseData);
+    sorted.forEach(item => {
+      if (item.data['current'] === '0') {
+        completedCoursesData.push(item);
+      } else {
+        currentCoursesData.push(item);
+      }
+    });
+
+    this.setState({
+      currentCoursesData,
+      completedCoursesData,
+    })
+  }
+
+  getExperienceData = async () => {
+    let experienceData = [];
+
+    await fb.experienceRef.get()
       .then(snapshot => {
         let items = [];
         snapshot.forEach(doc => {
@@ -57,12 +76,20 @@ class App extends Component {
           items.push(item);
         });
         let sorted = sortPriority(items);
-        awardsData = sorted;
+        experienceData = sorted;
       }).catch(err => {
         // save error to a state
         console.error('Error getting documents', err);
-        awardsData = undefined;
+        experienceData = undefined;
       });
+
+    this.setState({
+      experienceData,
+    })
+  }
+
+  getSocialsData = async () => {
+    let socialsData = [];
 
     await fb.socialsRef.get()
       .then(snapshot => {
@@ -82,7 +109,15 @@ class App extends Component {
         socialsData = undefined;
       });
 
-    await fb.coursesRef.get()
+    this.setState({
+      socialsData,
+    })
+  }
+
+  getAwardsData = async () => {
+    let awardsData = [];
+
+    await fb.awardsRef.get()
       .then(snapshot => {
         let items = [];
         snapshot.forEach(doc => {
@@ -92,39 +127,22 @@ class App extends Component {
           }
           items.push(item);
         });
-        let sorted = sortAlpha(items);
-        sorted.forEach(item => {
-          if (item.data['current'] === '0') {
-            completedCoursesData.push(item);
-          } else {
-            currentCoursesData.push(item);
-          }
-        })
+        let sorted = sortPriority(items);
+        awardsData = sorted;
       }).catch(err => {
         // save error to a state
         console.error('Error getting documents', err);
-        currentCoursesData = undefined;
-        completedCoursesData = undefined;
+        awardsData = undefined;
       });
 
-    await fb.experienceRef.get()
-      .then(snapshot => {
-        let items = [];
-        snapshot.forEach(doc => {
-          let item = {
-            id: doc.id,
-            data: doc.data(),
-          }
-          items.push(item);
-        });
-        let sorted = sortAlpha(items);
-        experienceData = sorted;
-      }).catch(err => {
-        // save error to a state
-        console.error('Error getting documents', err);
-        experienceData = undefined;
-      });
+    this.setState({
+      awardsData,
+    })
+  }
 
+  getClubsData = async () => {
+    let clubsData = [];
+    console.log('getting')
     await fb.clubsRef.get()
       .then(snapshot => {
         let items = [];
@@ -135,77 +153,71 @@ class App extends Component {
           }
           items.push(item);
         });
-        let sorted = sortAlpha(items);
-        clubData = sorted;
+        let sorted = sortPriority(items);
+        clubsData = sorted;
       }).catch(err => {
         // save error to a state
         console.error('Error getting documents', err);
-        clubData = undefined;
+        clubsData = undefined;
       });
 
     this.setState({
-      awardsData,
-      socialsData,
-      currentCoursesData,
-      completedCoursesData,
-      experienceData,
-      clubData,
-      isLoading: false,
-    });
+      clubsData,
+    })
   }
 
   render() {
     return (
       <div>
         <NavHeader />
-        {
-          this.state.isLoading
-            ?
-            <div>
-              <Spinner color="primary" className="spinner-center" />
-            </div>
-            :
-            <div className="site_container">
-              <Switch>
-                <Route path="/" exact component={Home} />
-                <Route
-                  path="/experience/"
-                  render={() =>
-                    <Experience allData={this.state.experienceData} />}
-                />
-                <Route path="/projects/" component={Projects} />
-                <Route
-                  path="/courses/"
-                  render={() =>
-                    <Courses
-                      currentCoursesData={this.state.currentCoursesData}
-                      completedCoursesData={this.state.completedCoursesData} />}
-                />
-                <Route
-                  path="/clubs/"
-                  render={() =>
-                    <Experience allData={this.state.clubData} />}
-                />
-                <Route
-                  path="/awards/"
-                  render={() =>
-                    <Awards
-                      awardsData={this.state.awardsData} />}
-                />
-                <Route
-                  path="/contacts/"
-                  render={() =>
-                    <Contacts socialsData={this.state.socialsData} />}
-                />
-                <Route path="/resume/" component={Resume} />
-                {/* Admin portal */}
-                <Route path="/admin/" exact component={Admin} />
-                <PrivateRoute path='/admin-edit' component={Edit} />
-                {/* 404 redirect to Home */}
-                <Redirect to="/" />
-              </Switch>
-            </div>
-        }
+        <div className="site_container">
+          <Switch>
+            <Route path="/" exact component={Home} />
+            <Route
+              path="/experience/"
+              render={() =>
+                <Experience
+                  allData={this.state.experienceData}
+                  getData={this.getExperienceData} />}
+            />
+            <Route path="/projects/" component={Projects} />
+            <Route
+              path="/courses/"
+              render={() =>
+                <Courses
+                  getData={this.getCoursesData}
+                  currentCoursesData={this.state.currentCoursesData}
+                  completedCoursesData={this.state.completedCoursesData} />}
+            />
+            <Route
+              path="/clubs/"
+              render={() =>
+                <Experience
+                  allData={this.state.clubsData}
+                  getData={this.getClubsData} />}
+            />
+            <Route
+              path="/awards/"
+              render={() =>
+                <Awards
+                  awardsData={this.state.awardsData}
+                  getData={this.getAwardsData} />}
+            />
+            <Route
+              path="/contacts/"
+              render={() =>
+                <Contacts
+                  socialsData={this.state.socialsData}
+                  getData={this.getSocialsData} />}
+            />
+            <Route path="/resume/" component={Resume} />
+            {/* Admin portal */}
+            <Route path="/admin/" exact component={Admin} />
+            <PrivateRoute path='/admin-edit' component={Edit} />
+            {/* 404 redirect to Home */}
+            <Redirect to="/" />
+          </Switch>
+        </div>
       </div>
     );
   }

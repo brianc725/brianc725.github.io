@@ -4,8 +4,18 @@ import '../styles/contactsStyles.css';
 import '../App.css';
 
 class Contacts extends Component {
+  componentDidMount() {
+    if (!this.props.socialsData) {
+      return;
+    }
+
+    if (this.props.socialsData.length === 0) {
+      this.props.getData();
+    }
+  }
+
   render() {
-    if (this.props.socialsData === undefined) {
+    if (!this.props.socialsData) {
         return (
           <Alert color="danger">
             Failed to load data. Please try again later.
