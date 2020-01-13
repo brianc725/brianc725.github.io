@@ -7,7 +7,6 @@ import {
   NavItem,
   NavLink,
   Button,
-  Spinner
 } from 'reactstrap';
 import classnames from 'classnames';
 import ExperienceForm from '../components/ExperienceForm';
@@ -16,6 +15,7 @@ import ResumeForm from '../components/ResumeForm';
 import AwardsForm from '../components/AwardsForm';
 import fb from '../firebase';
 import '../App.css'
+import { sortPriority, sortAlpha } from '../scripts/strings';
 
 class Edit extends Component {
   constructor(props) {
@@ -30,8 +30,9 @@ class Edit extends Component {
     };
   }
 
-  componentDidMount() {
-    fb.experienceRef.get()
+  getExperienceData = async () => {
+    let experienceData = [];
+    await fb.experienceRef.get()
       .then(snapshot => {
         let items = [];
         snapshot.forEach(doc => {
@@ -41,15 +42,22 @@ class Edit extends Component {
           }
           items.push(item);
         });
-        this.setState({
-          experienceData: items,
-        })
+        let sorted = sortPriority(items);
+        experienceData = sorted;
       }).catch(err => {
         // save error to a state
         console.error('Error getting documents', err);
+        experienceData = undefined;
       });
 
-    fb.socialsRef.get()
+    this.setState({
+      experienceData,
+    })
+  }
+
+  getSocialsData = async () => {
+    let socialsData = [];
+    await fb.socialsRef.get()
       .then(snapshot => {
         let items = [];
         snapshot.forEach(doc => {
@@ -59,15 +67,23 @@ class Edit extends Component {
           }
           items.push(item);
         });
-        this.setState({
-          socialsData: items,
-        })
+        let sorted = sortAlpha(items);
+        socialsData = sorted;
       }).catch(err => {
         // save error to a state
         console.error('Error getting documents', err);
+        socialsData = undefined;
       });
 
-    fb.clubsRef.get()
+    this.setState({
+      socialsData,
+    })
+  }
+
+  getAwardsData = async () => {
+    let awardsData = [];
+
+    await fb.awardsRef.get()
       .then(snapshot => {
         let items = [];
         snapshot.forEach(doc => {
@@ -77,15 +93,23 @@ class Edit extends Component {
           }
           items.push(item);
         });
-        this.setState({
-          clubsData: items,
-        })
+        let sorted = sortPriority(items);
+        awardsData = sorted;
       }).catch(err => {
         // save error to a state
         console.error('Error getting documents', err);
+        awardsData = undefined;
       });
 
-    fb.awardsRef.get()
+    this.setState({
+      awardsData,
+    })
+  }
+
+  getClubsData = async () => {
+    let clubsData = [];
+    console.log('getting')
+    await fb.clubsRef.get()
       .then(snapshot => {
         let items = [];
         snapshot.forEach(doc => {
@@ -95,13 +119,17 @@ class Edit extends Component {
           }
           items.push(item);
         });
-        this.setState({
-          awardsData: items,
-        })
+        let sorted = sortPriority(items);
+        clubsData = sorted;
       }).catch(err => {
         // save error to a state
         console.error('Error getting documents', err);
+        clubsData = undefined;
       });
+
+    this.setState({
+      clubsData,
+    })
   }
 
   toggle = (tab) => {
@@ -131,7 +159,7 @@ class Edit extends Component {
         )
         :
         <div>
-          <Spinner color="primary" className="spinner-center" />
+          <Button onClick={this.getExperienceData}>Load Experience Stored Data</Button>
         </div>
 
     let socialsDBForm =
@@ -142,7 +170,7 @@ class Edit extends Component {
         )
         :
         <div>
-          <Spinner color="primary" className="spinner-center" />
+          <Button onClick={this.getSocialsData}>Load Socials Stored Data</Button>
         </div>
 
     let clubsDBForm =
@@ -153,7 +181,7 @@ class Edit extends Component {
         )
         :
         <div>
-          <Spinner color="primary" className="spinner-center" />
+          <Button onClick={this.getExperienceData}>Load Clubs Stored Data</Button>
         </div>
 
     let awardsDBForm = this.state.awardsData
@@ -163,7 +191,7 @@ class Edit extends Component {
       )
       :
       <div>
-        <Spinner color="primary" className="spinner-center" />
+        <Button onClick={this.getAwardsData}>Load Awards Stored Data</Button>
       </div>
 
     return (
