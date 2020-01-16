@@ -17,7 +17,7 @@ import NavHeader from './components/navheader';
 import { PrivateRoute } from './components/privateroute';
 import fb from './firebase';
 import courseData from './courseData';
-import { sortPriority, sortAlpha } from './scripts/strings';
+import { sortPriority, sortAlpha, stringToArr } from './scripts/strings';
 import './App.css';
 
 class App extends Component {
@@ -30,6 +30,7 @@ class App extends Component {
       completedCoursesData: [],
       clubsData: [],
       experienceData: [],
+      projectsData: [],
     }
   }
 
@@ -39,6 +40,53 @@ class App extends Component {
         // console.log('user is logged in');
       }
     });
+
+    // TODO: Use github API /users endpoint to get the profile picture
+  }
+
+  getProjectsData = async () => {
+    let projectsData = [];
+    let filteredRepos = [];
+
+    await fb.projectsRef.get()
+      .then(snapshot => {
+        let items = [];
+        snapshot.forEach(doc => {
+          let item = {
+            id: doc.id,
+            data: doc.data(),
+          }
+          items.push(item);
+        });
+        filteredRepos = items;
+      }).catch(err => {
+        // save error to a state
+        console.error('Error getting documents', err);
+        filteredRepos = undefined;
+      });
+
+    // if we cannot get the filtered repos then we should immediately end
+    if (!filteredRepos) {
+      projectsData = undefined;
+    } else {
+      const filteredStr = filteredRepos[0].data['repo_names'];
+      // get the array of projects we want to display
+      const filteredArr = stringToArr(filteredStr);
+      await fetch('https://api.github.com/users/brianc725/repos')
+        .then(data => data.json())
+        .then(data => {
+          // filter down the desired information
+          projectsData = data.filter(i => filteredArr.includes(i.name));
+        })
+        .catch(err => {
+          console.error('Error getting data', err);
+          projectsData = undefined;
+        })
+    }
+
+    this.setState({
+      projectsData,
+    })
   }
 
   // No longer using firebase due to amount of reads... Plus this data is
