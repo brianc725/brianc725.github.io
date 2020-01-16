@@ -9,6 +9,7 @@ import {
   CardHeader,
 } from 'reactstrap';
 import '../App.css';
+import { stringToArr } from '../scripts/strings';
 
 class Awards extends Component {
   componentDidMount() {
@@ -27,9 +28,8 @@ class Awards extends Component {
   // Given the data.awarded string in format "F 18, F 19", return list comp.
   // separating them
   separateAwarded = (awarded) => {
-    const arr = awarded.split(',');
-    const trimmed = arr.map(i => i.trim());
-    let items = trimmed.map(item => {
+    const data = stringToArr(awarded);
+    let items = data.map(item => {
       return (
         <ListGroupItem key={item}>{item}</ListGroupItem>
       );

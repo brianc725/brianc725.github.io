@@ -14,3 +14,11 @@ export const sortPriority = (items) => {
         return Number(b['data'].order)-Number(a['data'].order);
     });
 }
+
+// Takes as input a string containing "A, B, C"
+// and returns [A, B, C]
+export const stringToArr = (str) => {
+    const arr = str.split(',');
+    const trimmed = arr.map(i => i.trim());
+    return trimmed;
+}
