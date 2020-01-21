@@ -31,8 +31,6 @@ class Projects extends Component {
       )
     }
 
-    console.log(this.props.allData);
-
     let projItems = this.props.allData.map((item) => {
       return (
         <ListGroupItem key={item.id}>
