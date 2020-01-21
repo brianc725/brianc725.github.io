@@ -190,7 +190,6 @@ class App extends Component {
 
   getClubsData = async () => {
     let clubsData = [];
-    console.log('getting')
     await fb.clubsRef.get()
       .then(snapshot => {
         let items = [];
@@ -228,7 +227,13 @@ class App extends Component {
                   allData={this.state.experienceData}
                   getData={this.getExperienceData} />}
             />
-            <Route path="/projects/" component={Projects} />
+            <Route
+              path="/projects/"
+              render={() =>
+                <Projects
+                  allData={this.state.projectsData}
+                  getData={this.getProjectsData} />}
+            />
             <Route
               path="/courses/"
               render={() =>

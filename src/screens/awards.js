@@ -54,8 +54,8 @@ class Awards extends Component {
       return (
         <ListGroupItem key={item.id}>
           <Card>
+            {data.name && <CardHeader tag="h3" className="text-center">{data.name}</CardHeader>}
             <CardBody className="text-center">
-              {data.name && <CardHeader tag="h3">{data.name}</CardHeader>}
               {data.description && <CardSubtitle style={{ paddingTop: '8px' }}>{data.description}</CardSubtitle>}
               <p style={{ paddingTop: '15px' }}>Awarded:</p>
               {data.awarded && this.separateAwarded(data.awarded)}

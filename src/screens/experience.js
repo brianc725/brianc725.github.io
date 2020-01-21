@@ -36,9 +36,9 @@ class Experience extends Component {
       return (
         <ListGroupItem key={item.id}>
           <Card>
+            {data.name && <CardHeader tag="h3" className="text-center">{data.name}</CardHeader>}
             <CardBody className="text-center">
-              {data.name && <CardHeader tag="h3">{data.name}</CardHeader>}
-              {data.title && <CardTitle tag="h5" style={{ paddingTop: '8px' }}>{data.title}</CardTitle>}
+              {data.title && <CardTitle tag="h5">{data.title}</CardTitle>}
               {data.start_date && data.end_date && <CardSubtitle><em>{data.start_date} - {data.end_date}</em></CardSubtitle>}
               {data.location && <CardSubtitle><small><em>{data.location}</em></small></CardSubtitle>}
               {data.description && <CardText>{data.description}</CardText>}
