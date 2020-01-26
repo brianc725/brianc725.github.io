@@ -279,7 +279,7 @@ class Edit extends Component {
               {/* The stuff from the DB that you can either update or delete */}
               {experienceDBForm}
               {/* New form if you want to add something new */}
-              <ExperienceForm addition={true} fbRef={fb.experienceRef} />
+              {this.state.activeTab === '2' && <ExperienceForm addition={true} fbRef={fb.experienceRef} />}
             </div>
           </TabPane>
           <TabPane tabId="3">
@@ -287,7 +287,7 @@ class Edit extends Component {
           </TabPane>
           <TabPane tabId="5">
             {clubsDBForm}
-            <ExperienceForm addition={true} fbRef={fb.clubsRef} />
+            {this.state.activeTab === '5' && <ExperienceForm addition={true} fbRef={fb.clubsRef} />}
           </TabPane>
           <TabPane tabId="6">
             <h1>Skills edit</h1>
@@ -302,12 +302,12 @@ class Edit extends Component {
               {/* The stuff from the DB that you can either update or delete */}
               {socialsDBForm}
               {/* New form if you want to add something new */}
-              <SocialsForm addition={true} />
+              {this.state.activeTab === '8' && <SocialsForm addition={true} />}
             </div>
           </TabPane>
           <TabPane tabId="9">
             {awardsDBForm}
-            <AwardsForm addition={true} />
+            {this.state.activeTab === '9' && <AwardsForm addition={true} />}
           </TabPane>
           <TabPane tabId="10">
             <Form>
