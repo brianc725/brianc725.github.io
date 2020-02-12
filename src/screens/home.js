@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Jumbotron, } from 'reactstrap';
+import { Jumbotron, Alert } from 'reactstrap';
 
 class Home extends Component {
   generateOpener = () => {
@@ -22,6 +22,15 @@ class Home extends Component {
 
     return (
       <div>
+        <Alert color="warning">
+          This site is under active development - please visit my
+          {' '}
+          <a href="https://brianc725.github.io/Old-Personal-Website/" target="_blank" rel="noopener noreferrer">
+            previous static portfolio website
+          </a>
+          {' '}
+          for the most up to date information.
+        </Alert>
         <Jumbotron>
           <h1>{opener}</h1>
           <h4>I am currently a fourth year Computer Science and Engineering
