@@ -62,6 +62,7 @@ class Courses extends Component {
           </NavItem>
           <NavItem>
             <NavLink
+              disabled
               className={classnames({ active: this.state.activeTab === '2' })}
               onClick={() => { this.toggle('2'); }}
             >
@@ -85,7 +86,7 @@ class Courses extends Component {
                 ?
                 this.props.currentCoursesData.map(item => <Course key={item.id} data={item.data} />)
                 :
-                'There are no relevant classes that I am currently taking.'
+                'I graduated from UCLA in March 2020. There are no relevant classes that I am currently taking.'
             }
           </TabPane>
         </TabContent>

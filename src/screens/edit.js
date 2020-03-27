@@ -10,12 +10,13 @@ import {
 } from 'reactstrap';
 import classnames from 'classnames';
 import ExperienceForm from '../components/ExperienceForm';
+import ProjectsForm from '../components/ProjectsForm';
 import SocialsForm from '../components/SocialsForm';
 import ResumeForm from '../components/ResumeForm';
 import AwardsForm from '../components/AwardsForm';
 import fb from '../firebase';
 import '../App.css'
-import { sortPriority, sortAlpha } from '../scripts/strings';
+import { sortPriority, sortAlpha, stringToArr } from '../scripts/strings';
 
 class Edit extends Component {
   constructor(props) {
@@ -27,6 +28,7 @@ class Edit extends Component {
       coursesData: undefined,
       clubsData: undefined,
       awardsData: undefined,
+      projectsData: undefined,
     };
   }
 
@@ -108,7 +110,6 @@ class Edit extends Component {
 
   getClubsData = async () => {
     let clubsData = [];
-    console.log('getting')
     await fb.clubsRef.get()
       .then(snapshot => {
         let items = [];
@@ -283,7 +284,7 @@ class Edit extends Component {
             </div>
           </TabPane>
           <TabPane tabId="3">
-            <h1>Projects edit</h1>
+            <ProjectsForm />
           </TabPane>
           <TabPane tabId="5">
             {clubsDBForm}

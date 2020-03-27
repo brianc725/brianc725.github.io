@@ -202,7 +202,7 @@ const courseData = [
     {
         "id": "hRinfwgMW2dwJsYasbIc",
         "data": {
-          "current": "1",
+          "current": "0",
           "desc": "Digital Electronic Circuits",
           "name": "EE 115C"
         }
