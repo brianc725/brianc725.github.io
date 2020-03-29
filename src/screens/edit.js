@@ -16,7 +16,7 @@ import ResumeForm from '../components/ResumeForm';
 import AwardsForm from '../components/AwardsForm';
 import fb from '../firebase';
 import '../App.css'
-import { sortPriority, sortAlpha, stringToArr } from '../scripts/strings';
+import { sortPriority, sortAlpha, } from '../scripts/strings';
 
 class Edit extends Component {
   constructor(props) {

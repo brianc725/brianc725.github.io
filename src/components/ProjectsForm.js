@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Col, Row, Button, Form, FormGroup, Label, Input, } from 'reactstrap';
+import { Col, Row, Button, Form, Input, } from 'reactstrap';
 import fb from '../firebase';
 import { stringToArr } from '../scripts/strings';
 
@@ -8,6 +8,7 @@ class ProjectsForm extends Component {
     super(props);
     this.state = {
       projectsData: undefined,
+      project: "",
     };
   }
 
@@ -40,13 +41,39 @@ class ProjectsForm extends Component {
     })
   }
 
+  handleChange = (event) => {
+    this.setState({
+      [event.target.id]: event.target.value
+    });
+  }
+
+  addProject = async (name) => {
+    const { projectsData, project } = this.state;
+    const allProjsStr = projectsData.toString() + ',' + project;
+
+    let itemRef = fb.projectsRef.doc('gvLzW1opI0tLlKf6PQua');
+    try {
+      await itemRef.update({ repo_names: allProjsStr });
+      console.log("Successfully updated");
+    }
+    catch (error) {
+      // The document probably doesn't exist.
+      console.error("Error updating document: ", error);
+    }
+
+    this.setState({
+      project: "",
+      projectsData: projectsData.concat(stringToArr(project))
+    })
+  }
+
   removeProject = async (name) => {
     const remainingData = this.state.projectsData.filter(i => i !== name);
     // update firebase reference with remainingData
 
     let itemRef = fb.projectsRef.doc('gvLzW1opI0tLlKf6PQua');
     try {
-      await itemRef.update({repo_names: remainingData.toString()});
+      await itemRef.update({ repo_names: remainingData.toString() });
       console.log("Successfully updated");
     }
     catch (error) {
@@ -64,16 +91,22 @@ class ProjectsForm extends Component {
       this.state.projectsData.map((item, idx) => {
         return (
           <div key={idx}>
-            <h3>{item}</h3>
-            <Button onClick={() => this.removeProject(item)}>Delete</Button>
+            <Row form>
+              <Col md={6}><h3>{item}</h3></Col>
+              <Col md={6}><Button onClick={() => this.removeProject(item)}>Delete</Button></Col>
+            </Row>
           </div>
         );
       })
 
     return (
-      <div>
+      <Form>
         {projectEditable}
-      </div>
+        <Row form>
+          <Col md={6}><Input type="text" name="project" id="project" placeholder="Add new project" onChange={this.handleChange} value={this.state.project} /></Col>
+          <Col md={6}><Button onClick={() => this.addProject()}>Add Project</Button></Col>
+        </Row>
+      </Form>
     );
   }
 }
