@@ -182,7 +182,7 @@ class Edit extends Component {
         )
         :
         <div>
-          <Button onClick={this.getExperienceData}>Load Clubs Stored Data</Button>
+          <Button onClick={this.getClubsData}>Load Clubs Stored Data</Button>
         </div>
 
     let awardsDBForm = this.state.awardsData
