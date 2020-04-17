@@ -8,6 +8,7 @@ import {
   CardFooter,
   CardBody,
   CardTitle,
+  CardSubtitle,
   CardHeader,
 } from 'reactstrap';
 
@@ -32,12 +33,21 @@ class Projects extends Component {
     }
 
     let projItems = this.props.allData.map((item) => {
+      const descriptionArray = item.description && item.description.split(':');
+      let descriptionTools = '';
+      let descriptionText = '';
+      if (descriptionArray.length === 2) {
+        descriptionTools = descriptionArray[0].trim();
+        descriptionText = descriptionArray[1].trim();
+      }
+
       return (
         <ListGroupItem key={item.id}>
           <Card>
             {item.name && <CardHeader tag="h3" className="text-center">{item.name}</CardHeader>}
             <CardBody className="text-center">
-              {item.description && <CardTitle tag="h5" style={{ paddingBottom: '0px', marginBottom: '0px' }}>{item.description}</CardTitle>}
+              {descriptionText && <CardTitle tag="h5">{descriptionText}</CardTitle>}
+              {descriptionTools && <CardSubtitle>Utilized: {descriptionTools}</CardSubtitle>}
             </CardBody>
             <CardFooter className="text-center">
               {item.html_url && <CardLink href={item.html_url} target="_blank" rel="noopener noreferrer">Github Repository</CardLink>}
