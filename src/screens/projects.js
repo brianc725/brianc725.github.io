@@ -35,8 +35,8 @@ class Projects extends Component {
     let projItems = this.props.allData.map((item) => {
       const descriptionArray = item.description && item.description.split(':');
       let descriptionTools = '';
-      let descriptionText = '';
-      if (descriptionArray.length === 2) {
+      let descriptionText = item.description || '';
+      if (descriptionArray && descriptionArray.length === 2) {
         descriptionTools = descriptionArray[0].trim();
         descriptionText = descriptionArray[1].trim();
       }
