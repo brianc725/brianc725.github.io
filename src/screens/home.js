@@ -38,7 +38,7 @@ class Home extends Component {
           <hr />
           <p>Besides learning how to code, I enjoy photography and traveling.
             I graduated from University of California, Los Angeles (UCLA)
-            in March 2020.
+            in March 2020 with a B.S. in Computer Science and Engineering.
           </p>
         </Jumbotron>
       </div>
