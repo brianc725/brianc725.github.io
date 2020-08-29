@@ -47,7 +47,7 @@ class Projects extends Component {
             {item.name && <CardHeader tag="h3" className="text-center">{item.name}</CardHeader>}
             <CardBody className="text-center">
               {descriptionText && <CardTitle tag="h5">{descriptionText}</CardTitle>}
-              {descriptionTools && <CardSubtitle>Utilized: {descriptionTools}</CardSubtitle>}
+              {descriptionTools && <CardSubtitle>Utilized: {descriptionTools.substring(1,descriptionTools.length-1)}</CardSubtitle>}
             </CardBody>
             <CardFooter className="text-center">
               {item.html_url && <CardLink href={item.html_url} target="_blank" rel="noopener noreferrer">Github Repository</CardLink>}

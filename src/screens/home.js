@@ -33,11 +33,13 @@ class Home extends Component {
         </Alert>
         <Jumbotron>
           <h1>{opener}</h1>
-          <h4>I am currently a fourth year Computer Science and Engineering
-            major at University of California, Los Angeles.
+          <h4>Member of Technical Staff at VMware
           </h4>
           <hr />
-          <p>Besides learning how to code, I enjoy photography and traveling.</p>
+          <p>Besides learning how to code, I enjoy photography and traveling.
+            I graduated from University of California, Los Angeles (UCLA)
+            in March 2020.
+          </p>
         </Jumbotron>
       </div>
     );
