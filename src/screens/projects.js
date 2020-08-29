@@ -26,7 +26,9 @@ class Projects extends Component {
   }
 
   render() {
-    if (this.props.allData === undefined) {
+    let { allData } = this.props;
+
+    if (allData === undefined) {
       return (
         <Alert color="danger">
           Failed to load data. Please try again later.
@@ -34,7 +36,7 @@ class Projects extends Component {
       )
     }
 
-    let projItems = this.props.allData.map((item) => {
+    let projItems = allData.map((item) => {
       const descriptionArray = item.description && item.description.split(':');
       let descriptionTools = '';
       let descriptionText = item.description || '';

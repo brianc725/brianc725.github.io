@@ -84,6 +84,18 @@ class App extends Component {
         })
     }
 
+    // Hard coded StudyB item
+    const itemStudyB = {
+      description: `[React Native]: A React Native iOS and Android app allowing
+      students at UCLA to find, view hours, and view busyness levels of study
+      locations on campus.`,
+      name: 'StudyB, with UCLA DevX (formerly StudySmart)',
+      html_url: 'https://github.com/ucladevx/StudySmart_react_native',
+      homepage: 'https://play.google.com/store/apps/details?id=com.studysmart',
+      id: '11111111111',
+    };
+    projectsData.push(itemStudyB);
+
     this.setState({
       projectsData,
     })
