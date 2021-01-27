@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ListGroup, ListGroupItem, Media, Alert } from 'reactstrap';
+import { ListGroup, ListGroupItem, Media, Alert, Spinner } from 'reactstrap';
 import '../styles/contactsStyles.css';
 import '../App.css';
 
@@ -21,6 +21,10 @@ class Contacts extends Component {
             Failed to load data. Please try again later.
           </Alert>
         )
+    }
+
+    if (this.props.socialsData.length === 0) {
+      return <Spinner color="dark" className="spinner_center"/>;
     }
 
     let socialItems = this.props.socialsData.map((item) => {

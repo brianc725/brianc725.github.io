@@ -11,8 +11,10 @@ import {
   CardTitle,
   CardSubtitle,
   CardHeader,
+  Spinner,
 } from 'reactstrap';
 import { stringToArr } from '../scripts/strings';
+import '../App.css';
 
 class Projects extends Component {
   componentDidMount() {
@@ -34,6 +36,10 @@ class Projects extends Component {
           Failed to load data. Please try again later.
           </Alert>
       )
+    }
+
+    if (this.props.allData.length === 0) {
+      return <Spinner color="dark" className="spinner_center"/>;
     }
 
     let projItems = allData.map((item) => {

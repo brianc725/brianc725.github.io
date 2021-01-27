@@ -9,7 +9,9 @@ import {
   CardTitle,
   CardSubtitle,
   CardHeader,
+  Spinner,
 } from 'reactstrap';
+import '../App.css';
 
 class Experience extends Component {
   componentDidMount() {
@@ -29,6 +31,10 @@ class Experience extends Component {
           Failed to load data. Please try again later.
           </Alert>
       )
+    }
+
+    if (this.props.allData.length === 0) {
+      return <Spinner color="dark" className="spinner_center"/>;
     }
 
     let experienceItems = this.props.allData.map((item) => {

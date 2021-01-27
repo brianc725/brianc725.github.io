@@ -7,6 +7,7 @@ import {
   CardBody,
   CardSubtitle,
   CardHeader,
+  Spinner,
 } from 'reactstrap';
 import '../App.css';
 import { stringToArr } from '../scripts/strings';
@@ -47,6 +48,10 @@ class Awards extends Component {
           Failed to load data. Please try again later.
           </Alert>
       )
+    }
+
+    if (this.props.awardsData.length === 0) {
+      return <Spinner color="dark" className="spinner_center"/>;
     }
 
     let awardsItems = this.props.awardsData.map((item) => {
