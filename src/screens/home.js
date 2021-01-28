@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Jumbotron, Alert } from 'reactstrap';
+import '../App.css';
 
 class Home extends Component {
   generateOpener = () => {
@@ -31,12 +32,12 @@ class Home extends Component {
           {' '}
           for the most up to date information.
         </Alert>
-        <Jumbotron>
+        <Jumbotron className="dark_bg" >
           <h1>{opener}</h1>
           <h4>Member of Technical Staff at VMware
           </h4>
           <hr />
-          <p>Besides learning how to code, I enjoy photography and traveling.
+          <p style={{color: 'white'}}>Besides learning how to code, I enjoy photography and traveling.
             I graduated from University of California, Los Angeles (UCLA)
             in March 2020 with a B.S. in Computer Science and Engineering.
           </p>

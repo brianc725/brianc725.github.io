@@ -60,7 +60,7 @@ class Courses extends Component {
               Completed Courses
                         </NavLink>
           </NavItem>
-          <NavItem>
+          {/* <NavItem>
             <NavLink
               disabled
               className={classnames({ active: this.state.activeTab === '2' })}
@@ -68,7 +68,7 @@ class Courses extends Component {
             >
               Current Courses
                     </NavLink>
-          </NavItem>
+          </NavItem> */}
         </Nav>
         <TabContent activeTab={this.state.activeTab}>
           <TabPane tabId="1">

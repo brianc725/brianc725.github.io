@@ -31,6 +31,7 @@ class App extends Component {
       clubsData: [],
       experienceData: [],
       projectsData: [],
+      isDarkMode: false,
     }
   }
 
@@ -40,8 +41,13 @@ class App extends Component {
         // console.log('user is logged in');
       }
     });
-
     // TODO: Use github API /users endpoint to get the profile picture
+
+    // Use localstorage dark mode to see if there was value from prev visit
+    const isDarkMode = (localStorage.getItem("isDarkMode") === 'true');
+    this.setState({
+      isDarkMode,
+    });
   }
 
   getProjectsData = async () => {
@@ -225,10 +231,21 @@ class App extends Component {
     })
   }
 
+  toggleDarkMode = () => {
+    const currentMode = this.state.isDarkMode;
+    localStorage.setItem("isDarkMode", !currentMode);
+    this.setState({
+      isDarkMode: !currentMode,
+    });
+  }
+
   render() {
     return (
-      <div>
-        <NavHeader />
+      <div className="root_container">
+        <NavHeader
+          toggleDarkMode={this.toggleDarkMode}
+          isDarkMode={this.state.isDarkMode}
+        />
         <div className="site_container">
           <Switch>
             <Route path="/" exact component={Home} />

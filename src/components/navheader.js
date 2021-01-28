@@ -12,8 +12,10 @@ import {
   DropdownMenu,
   DropdownItem
 } from 'reactstrap';
+import DarkModeToggle from "react-dark-mode-toggle";
 import { Link } from 'react-router-dom';
 import fb from '../firebase';
+import '../App.css';
 
 class NavHeader extends Component {
   constructor(props) {
@@ -59,6 +61,7 @@ class NavHeader extends Component {
 
   render() {
     return (
+      // <Navbar color="dark" dark fixed="top" expand="md">
       <Navbar color="light" light fixed="top" expand="md">
         <NavbarBrand tag={Link} to="/">Brian Chan</NavbarBrand>
         <NavbarToggler onClick={this.toggle} />
@@ -102,6 +105,14 @@ class NavHeader extends Component {
                 <NavLink tag={Link} to="/admin-edit/" onClick={this.toggleCond}>Edit</NavLink>
               </NavItem>
             }
+            <NavItem className="dark_mode_toggler">
+              <DarkModeToggle
+                onChange={this.props.toggleDarkMode}
+                checked={this.props.isDarkMode}
+                size={50}
+                speed={2}
+              />
+            </NavItem>
           </Nav>
         </Collapse>
       </Navbar>
