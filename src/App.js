@@ -9,6 +9,7 @@ import Experience from './screens/experience';
 import Projects from './screens/projects';
 import Contacts from './screens/contacts';
 import Courses from './screens/courses';
+import Skills from './screens/skills';
 import Awards from './screens/awards';
 import Resume from './screens/resume';
 import Admin from './screens/admin';
@@ -270,6 +271,11 @@ class App extends Component {
                   getData={this.getCoursesData}
                   currentCoursesData={this.state.currentCoursesData}
                   completedCoursesData={this.state.completedCoursesData} />}
+            />
+            <Route
+              path="/skills/"
+              render={() =>
+                <Skills />}
             />
             <Route
               path="/clubs/"

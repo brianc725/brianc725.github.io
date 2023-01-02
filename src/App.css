@@ -1,15 +1,15 @@
 /* html, body { margin: 0; padding: 0; background-color: black;}  */
 
-html, body {
+/* html, body {
     margin: 0;
     height: 100%;
-}
+} */
 
-.root_container {
+/* .root_container {
     background-color: black;
     min-height: 100vh;
     height: 100%;
-}
+} */
 
 .site_container {
     padding-top: 60px;
